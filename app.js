@@ -1,4 +1,4 @@
-const { useMemo, useState, useEffect } = React;
+const { useMemo, useState, useEffect, useRef } = React;
 
 const LANGS = ["en", "fr", "es", "de", "it", "pt", "nl", "tr"];
 
@@ -47,6 +47,10 @@ const I18N = {
     lastLogin: "Last login",
     lastEdit: "Last edit",
     exportDone: "Export generated.",
+    exportAccounts: "Export accounts",
+    importAccounts: "Import accounts",
+    importDone: "Accounts imported.",
+    badImport: "Invalid import file.",
     chooseLang: "Choose language",
     showPassword: "Show",
     hidePassword: "Hide",
@@ -95,6 +99,10 @@ const I18N = {
     lastLogin: "Derniere connexion",
     lastEdit: "Derniere modification",
     exportDone: "Export genere.",
+    exportAccounts: "Exporter comptes",
+    importAccounts: "Importer comptes",
+    importDone: "Comptes importes.",
+    badImport: "Fichier d'import invalide.",
     chooseLang: "Choisir la langue",
     showPassword: "Afficher",
     hidePassword: "Masquer",
@@ -143,6 +151,10 @@ const I18N = {
     lastLogin: "Ultimo acceso",
     lastEdit: "Ultima edicion",
     exportDone: "Exportacion generada.",
+    exportAccounts: "Exportar cuentas",
+    importAccounts: "Importar cuentas",
+    importDone: "Cuentas importadas.",
+    badImport: "Archivo de importacion invalido.",
     chooseLang: "Elegir idioma",
     showPassword: "Mostrar",
     hidePassword: "Ocultar",
@@ -191,6 +203,10 @@ const I18N = {
     lastLogin: "Letzter Login",
     lastEdit: "Letzte Bearbeitung",
     exportDone: "Export erstellt.",
+    exportAccounts: "Konten exportieren",
+    importAccounts: "Konten importieren",
+    importDone: "Konten importiert.",
+    badImport: "Ungueltige Importdatei.",
     chooseLang: "Sprache waehlen",
     showPassword: "Anzeigen",
     hidePassword: "Verbergen",
@@ -239,6 +255,10 @@ const I18N = {
     lastLogin: "Ultimo accesso",
     lastEdit: "Ultima modifica",
     exportDone: "Esportazione generata.",
+    exportAccounts: "Esporta account",
+    importAccounts: "Importa account",
+    importDone: "Account importati.",
+    badImport: "File di importazione non valido.",
     chooseLang: "Scegli lingua",
     showPassword: "Mostra",
     hidePassword: "Nascondi",
@@ -287,6 +307,10 @@ const I18N = {
     lastLogin: "Ultimo login",
     lastEdit: "Ultima edicao",
     exportDone: "Exportacao gerada.",
+    exportAccounts: "Exportar contas",
+    importAccounts: "Importar contas",
+    importDone: "Contas importadas.",
+    badImport: "Arquivo de importacao invalido.",
     chooseLang: "Escolher idioma",
     showPassword: "Mostrar",
     hidePassword: "Ocultar",
@@ -335,6 +359,10 @@ const I18N = {
     lastLogin: "Laatste login",
     lastEdit: "Laatst bewerkt",
     exportDone: "Export gemaakt.",
+    exportAccounts: "Accounts exporteren",
+    importAccounts: "Accounts importeren",
+    importDone: "Accounts geimporteerd.",
+    badImport: "Ongeldig importbestand.",
     chooseLang: "Kies taal",
     showPassword: "Tonen",
     hidePassword: "Verbergen",
@@ -383,6 +411,10 @@ const I18N = {
     lastLogin: "Son giris",
     lastEdit: "Son duzenleme",
     exportDone: "Disa aktarma olusturuldu.",
+    exportAccounts: "Hesaplari disari aktar",
+    importAccounts: "Hesaplari ice aktar",
+    importDone: "Hesaplar ice aktarildi.",
+    badImport: "Gecersiz ice aktarma dosyasi.",
     chooseLang: "Dil sec",
     showPassword: "Goster",
     hidePassword: "Gizle",
@@ -425,6 +457,7 @@ function App() {
   const [mode, setMode] = useState("create");
   const [msg, setMsg] = useState("");
   const [searchResult, setSearchResult] = useState(null);
+  const fileInputRef = useRef(null);
 
   const [createForm, setCreateForm] = useState({
     username: "",
@@ -458,6 +491,32 @@ function App() {
       setEditForm(null);
     }
   }, [currentUser, accounts]);
+
+  function exportAccounts() {
+    const payload = JSON.stringify(accounts, null, 2);
+    downloadFile("accounts_backup.json", payload, "application/json");
+    setMsg(t(lang, "exportDone"));
+  }
+
+  function handleImportFile(e) {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(reader.result);
+        if (!parsed || typeof parsed !== "object") {
+          throw new Error("Invalid data");
+        }
+        setAccounts(parsed);
+        setMsg(t(lang, "importDone"));
+      } catch (err) {
+        setMsg(t(lang, "badImport"));
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  }
 
   const currentAccount = useMemo(
     () => (currentUser && accounts[currentUser] ? accounts[currentUser] : null),
@@ -629,6 +688,19 @@ function App() {
             <button className={mode === "search" ? "active" : ""} onClick={() => setMode("search")}>
               {t(lang, "search")}
             </button>
+          </div>
+          <div className="actions">
+            <button onClick={exportAccounts}>{t(lang, "exportAccounts")}</button>
+            <button onClick={() => fileInputRef.current && fileInputRef.current.click()}>
+              {t(lang, "importAccounts")}
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="application/json"
+              style={{ display: "none" }}
+              onChange={handleImportFile}
+            />
           </div>
 
           {mode === "create" && (
