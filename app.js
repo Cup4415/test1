@@ -4,14 +4,86 @@ const API_BASE = "http://127.0.0.1:5175";
 
 const LANGS = ["en", "fr", "es", "de", "it", "pt", "nl", "tr"];
 const LANG_LABELS = {
-  en: "English",
-  fr: "Francais",
-  es: "Espanol",
-  de: "Deutsch",
-  it: "Italiano",
-  pt: "Portugues",
-  nl: "Nederlands",
-  tr: "Turkce",
+  en: {
+    en: "English",
+    fr: "French",
+    es: "Spanish",
+    de: "German",
+    it: "Italian",
+    pt: "Portuguese",
+    nl: "Dutch",
+    tr: "Turkish",
+  },
+  fr: {
+    en: "Anglais",
+    fr: "Francais",
+    es: "Espagnol",
+    de: "Allemand",
+    it: "Italien",
+    pt: "Portugais",
+    nl: "Neerlandais",
+    tr: "Turc",
+  },
+  es: {
+    en: "Ingles",
+    fr: "Frances",
+    es: "Espanol",
+    de: "Aleman",
+    it: "Italiano",
+    pt: "Portugues",
+    nl: "Neerlandes",
+    tr: "Turco",
+  },
+  de: {
+    en: "Englisch",
+    fr: "Franzoesisch",
+    es: "Spanisch",
+    de: "Deutsch",
+    it: "Italienisch",
+    pt: "Portugiesisch",
+    nl: "Niederlaendisch",
+    tr: "Tuerkisch",
+  },
+  it: {
+    en: "Inglese",
+    fr: "Francese",
+    es: "Spagnolo",
+    de: "Tedesco",
+    it: "Italiano",
+    pt: "Portoghese",
+    nl: "Olandese",
+    tr: "Turco",
+  },
+  pt: {
+    en: "Ingles",
+    fr: "Frances",
+    es: "Espanhol",
+    de: "Alemao",
+    it: "Italiano",
+    pt: "Portugues",
+    nl: "Neerlandes",
+    tr: "Turco",
+  },
+  nl: {
+    en: "Engels",
+    fr: "Frans",
+    es: "Spaans",
+    de: "Duits",
+    it: "Italiaans",
+    pt: "Portugees",
+    nl: "Nederlands",
+    tr: "Turks",
+  },
+  tr: {
+    en: "Ingilizce",
+    fr: "Fransizca",
+    es: "Ispanyolca",
+    de: "Almanca",
+    it: "Italyanca",
+    pt: "Portekizce",
+    nl: "Hollandaca",
+    tr: "Turkce",
+  },
 };
 
 const I18N = {
@@ -647,7 +719,7 @@ function App() {
             <select value={lang} onChange={(e) => setLang(e.target.value)}>
               {LANGS.map((l) => (
                 <option key={l} value={l}>
-                  {LANG_LABELS[l] || l}
+                  {(LANG_LABELS[lang] && LANG_LABELS[lang][l]) || l}
                 </option>
               ))}
             </select>
