@@ -719,9 +719,9 @@ function App() {
             <select value={lang} onChange={(e) => setLang(e.target.value)}>
               {LANGS.map((l) => (
                 <option key={l} value={l}>
-                  ((LANG_LABELS[lang] && LANG_LABELS[lang][l]) ||
+                  {((LANG_LABELS[lang] && LANG_LABELS[lang][l]) ||
                     (LANG_LABELS.en && LANG_LABELS.en[l]) ||
-                    l)
+                    l)}
                 </option>
               ))}
             </select>
@@ -848,6 +848,15 @@ function App() {
                       <div className="line">{searchResult.account.profile.firstName} {searchResult.account.profile.lastName}</div>
                       <div className="line">{t(lang, "username")}: {searchResult.account.profile.username}</div>
                       <div className="line">{t(lang, "job")}: {searchResult.account.profile.job}</div>
+                      <div className="line">{t(lang, "age")}: {searchResult.account.profile.age}</div>
+                      <div className="line">{t(lang, "favoriteFood")}: {searchResult.account.profile.favoriteFood}</div>
+                      <div className="line">{t(lang, "city")}: {searchResult.account.profile.city}</div>
+                      <div className="line">{t(lang, "hobby")}: {searchResult.account.profile.hobby}</div>
+                      <div className="line">{t(lang, "favoriteColor")}: {searchResult.account.profile.favoriteColor}</div>
+                      <div className="line">{t(lang, "dreamJob")}: {searchResult.account.profile.dreamJob}</div>
+                      <div className="line">{t(lang, "createdAt")}: {searchResult.account.created_at}</div>
+                      <div className="line">{t(lang, "lastLogin")}: {searchResult.account.last_login}</div>
+                      <div className="line">{t(lang, "lastEdit")}: {searchResult.account.last_edit}</div>
                     </div>
                   )}
                 </div>
