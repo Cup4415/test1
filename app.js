@@ -48,6 +48,8 @@ const I18N = {
     lastEdit: "Last edit",
     exportDone: "Export generated.",
     chooseLang: "Choose language",
+    showPassword: "Show",
+    hidePassword: "Hide",
   },
   fr: {
     title: "Comptes Profil",
@@ -94,6 +96,8 @@ const I18N = {
     lastEdit: "Derniere modification",
     exportDone: "Export genere.",
     chooseLang: "Choisir la langue",
+    showPassword: "Afficher",
+    hidePassword: "Masquer",
   },
   es: {
     title: "Cuentas de Perfil",
@@ -140,6 +144,8 @@ const I18N = {
     lastEdit: "Ultima edicion",
     exportDone: "Exportacion generada.",
     chooseLang: "Elegir idioma",
+    showPassword: "Mostrar",
+    hidePassword: "Ocultar",
   },
   de: {
     title: "Profilkonten",
@@ -186,6 +192,8 @@ const I18N = {
     lastEdit: "Letzte Bearbeitung",
     exportDone: "Export erstellt.",
     chooseLang: "Sprache waehlen",
+    showPassword: "Anzeigen",
+    hidePassword: "Verbergen",
   },
   it: {
     title: "Account Profilo",
@@ -232,6 +240,8 @@ const I18N = {
     lastEdit: "Ultima modifica",
     exportDone: "Esportazione generata.",
     chooseLang: "Scegli lingua",
+    showPassword: "Mostra",
+    hidePassword: "Nascondi",
   },
   pt: {
     title: "Contas de Perfil",
@@ -278,6 +288,8 @@ const I18N = {
     lastEdit: "Ultima edicao",
     exportDone: "Exportacao gerada.",
     chooseLang: "Escolher idioma",
+    showPassword: "Mostrar",
+    hidePassword: "Ocultar",
   },
   nl: {
     title: "Profielaccounts",
@@ -324,6 +336,8 @@ const I18N = {
     lastEdit: "Laatst bewerkt",
     exportDone: "Export gemaakt.",
     chooseLang: "Kies taal",
+    showPassword: "Tonen",
+    hidePassword: "Verbergen",
   },
   tr: {
     title: "Profil Hesaplari",
@@ -370,6 +384,8 @@ const I18N = {
     lastEdit: "Son duzenleme",
     exportDone: "Disa aktarma olusturuldu.",
     chooseLang: "Dil sec",
+    showPassword: "Goster",
+    hidePassword: "Gizle",
   },
 };
 
@@ -425,6 +441,9 @@ function App() {
     dreamJob: "",
   });
   const [loginForm, setLoginForm] = useState({ username: "", password: "" });
+  const [showCreatePassword, setShowCreatePassword] = useState(false);
+  const [showCreateConfirm, setShowCreateConfirm] = useState(false);
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [searchUsername, setSearchUsername] = useState("");
   const [editForm, setEditForm] = useState(null);
 
@@ -619,8 +638,40 @@ function App() {
                 <div className="field"><label>{t(lang, "age")}</label><input value={createForm.age} onChange={(e) => setCreateForm({ ...createForm, age: e.target.value })} /></div>
               </div>
               <div className="row">
-                <div className="field"><label>{t(lang, "password")}</label><input type="password" value={createForm.password} onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })} /></div>
-                <div className="field"><label>{t(lang, "confirmPassword")}</label><input type="password" value={createForm.confirmPassword} onChange={(e) => setCreateForm({ ...createForm, confirmPassword: e.target.value })} /></div>
+                <div className="field">
+                  <label>{t(lang, "password")}</label>
+                  <div className="password-input">
+                    <input
+                      type={showCreatePassword ? "text" : "password"}
+                      value={createForm.password}
+                      onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
+                    />
+                    <button
+                      type="button"
+                      className="ghost"
+                      onClick={() => setShowCreatePassword((v) => !v)}
+                    >
+                      {t(lang, showCreatePassword ? "hidePassword" : "showPassword")}
+                    </button>
+                  </div>
+                </div>
+                <div className="field">
+                  <label>{t(lang, "confirmPassword")}</label>
+                  <div className="password-input">
+                    <input
+                      type={showCreateConfirm ? "text" : "password"}
+                      value={createForm.confirmPassword}
+                      onChange={(e) => setCreateForm({ ...createForm, confirmPassword: e.target.value })}
+                    />
+                    <button
+                      type="button"
+                      className="ghost"
+                      onClick={() => setShowCreateConfirm((v) => !v)}
+                    >
+                      {t(lang, showCreateConfirm ? "hidePassword" : "showPassword")}
+                    </button>
+                  </div>
+                </div>
               </div>
               <div className="row">
                 <div className="field"><label>{t(lang, "firstName")}</label><input value={createForm.firstName} onChange={(e) => setCreateForm({ ...createForm, firstName: e.target.value })} /></div>
@@ -645,7 +696,23 @@ function App() {
           {mode === "login" && (
             <form onSubmit={handleLogin}>
               <div className="field"><label>{t(lang, "username")}</label><input value={loginForm.username} onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })} /></div>
-              <div className="field"><label>{t(lang, "password")}</label><input type="password" value={loginForm.password} onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })} /></div>
+              <div className="field">
+                <label>{t(lang, "password")}</label>
+                <div className="password-input">
+                  <input
+                    type={showLoginPassword ? "text" : "password"}
+                    value={loginForm.password}
+                    onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
+                  />
+                  <button
+                    type="button"
+                    className="ghost"
+                    onClick={() => setShowLoginPassword((v) => !v)}
+                  >
+                    {t(lang, showLoginPassword ? "hidePassword" : "showPassword")}
+                  </button>
+                </div>
+              </div>
               <button>{t(lang, "submitLogin")}</button>
             </form>
           )}

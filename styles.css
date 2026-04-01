@@ -125,6 +125,19 @@ select {
   background: rgba(255, 255, 255, 0.95);
 }
 
+.password-input {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.ghost {
+  background: transparent;
+  border-color: var(--line);
+  padding: 9px 10px;
+}
+
 .row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
