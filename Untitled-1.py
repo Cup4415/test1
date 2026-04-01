@@ -341,6 +341,22 @@ def hash_password(password):
     return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
 
+TESTDATA_TEMPLATE_USERNAME = "Cup4415"
+
+
+def build_testdata_profile(accounts, username):
+    template = accounts.get(TESTDATA_TEMPLATE_USERNAME)
+    if not template or not isinstance(template, dict):
+        return None
+    profile = template.get("profile")
+    if not isinstance(profile, dict):
+        return None
+    # Deep copy to avoid mutating the template account.
+    copied = json.loads(json.dumps(profile))
+    copied["username"] = username
+    return copied
+
+
 def load_accounts():
     if ACCOUNTS_FILE.exists():
         try:
@@ -651,7 +667,29 @@ while True:
                     break
                 print(t(language, "Passwords do not match.", "Les mots de passe ne correspondent pas.", "كلمتا المرور غير متطابقتين."))
 
-            profile = collect_profile(language, username)
+            use_testdata = input(
+                t(
+                    language,
+                    "Use testdata profile (same as Cup4415)? (y/n): ",
+                    "Utiliser le profil testdata (comme Cup4415) ? (y/n) : ",
+                    "Ø§Ø³ØªØ®Ø¯Ù… Ù…Ù„Ù testdata (Ù…Ø«Ù„ Cup4415)ØŸ (y/n): ",
+                )
+            ).strip().lower() == "y"
+
+            if use_testdata:
+                profile = build_testdata_profile(accounts, username)
+                if profile is None:
+                    print(
+                        t(
+                            language,
+                            "Testdata source not found. Creating profile manually.",
+                            "Source testdata introuvable. Creation manuelle du profil.",
+                            "Ù…ØµØ¯Ø± testdata ØºÙŠØ± Ù…ÙˆØ¬ÙˆØ¯. Ø³ÙŠØªÙ… Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ù…Ù„Ù ÙŠØ¯ÙˆÙŠØ§.",
+                        )
+                    )
+                    profile = collect_profile(language, username)
+            else:
+                profile = collect_profile(language, username)
             created = now_text()
             accounts[username] = {
                 "password_hash": hash_password(password),
