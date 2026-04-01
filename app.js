@@ -3,6 +3,16 @@ const { useMemo, useState, useEffect } = React;
 const API_BASE = "http://127.0.0.1:5175";
 
 const LANGS = ["en", "fr", "es", "de", "it", "pt", "nl", "tr"];
+const LANG_LABELS = {
+  en: "English",
+  fr: "Francais",
+  es: "Espanol",
+  de: "Deutsch",
+  it: "Italiano",
+  pt: "Portugues",
+  nl: "Nederlands",
+  tr: "Turkce",
+};
 
 const I18N = {
   en: {
@@ -637,7 +647,7 @@ function App() {
             <select value={lang} onChange={(e) => setLang(e.target.value)}>
               {LANGS.map((l) => (
                 <option key={l} value={l}>
-                  {l}
+                  {LANG_LABELS[l] || l}
                 </option>
               ))}
             </select>
