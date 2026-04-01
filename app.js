@@ -112,8 +112,6 @@ const I18N = {
     viewProfile: "View profile",
     editProfile: "Edit profile",
     deleteAccount: "Delete account",
-    exportTxt: "Export TXT",
-    exportJson: "Export JSON",
     saveChanges: "Save changes",
     accountExists: "Username already exists.",
     required: "Username and password cannot be empty.",
@@ -130,7 +128,6 @@ const I18N = {
     createdAt: "Created at",
     lastLogin: "Last login",
     lastEdit: "Last edit",
-    exportDone: "Export generated.",
     chooseLang: "Choose language",
     showPassword: "Show",
     hidePassword: "Hide",
@@ -160,8 +157,6 @@ const I18N = {
     viewProfile: "Voir profil",
     editProfile: "Modifier profil",
     deleteAccount: "Supprimer compte",
-    exportTxt: "Exporter TXT",
-    exportJson: "Exporter JSON",
     saveChanges: "Enregistrer",
     accountExists: "Nom d'utilisateur deja utilise.",
     required: "Nom d'utilisateur et mot de passe obligatoires.",
@@ -178,7 +173,6 @@ const I18N = {
     createdAt: "Cree le",
     lastLogin: "Derniere connexion",
     lastEdit: "Derniere modification",
-    exportDone: "Export genere.",
     chooseLang: "Choisir la langue",
     showPassword: "Afficher",
     hidePassword: "Masquer",
@@ -208,8 +202,6 @@ const I18N = {
     viewProfile: "Ver perfil",
     editProfile: "Editar perfil",
     deleteAccount: "Eliminar cuenta",
-    exportTxt: "Exportar TXT",
-    exportJson: "Exportar JSON",
     saveChanges: "Guardar cambios",
     accountExists: "El nombre de usuario ya existe.",
     required: "Usuario y contrasena no pueden estar vacios.",
@@ -226,7 +218,6 @@ const I18N = {
     createdAt: "Creado",
     lastLogin: "Ultimo acceso",
     lastEdit: "Ultima edicion",
-    exportDone: "Exportacion generada.",
     chooseLang: "Elegir idioma",
     showPassword: "Mostrar",
     hidePassword: "Ocultar",
@@ -256,8 +247,6 @@ const I18N = {
     viewProfile: "Profil anzeigen",
     editProfile: "Profil bearbeiten",
     deleteAccount: "Konto loeschen",
-    exportTxt: "TXT exportieren",
-    exportJson: "JSON exportieren",
     saveChanges: "Aenderungen speichern",
     accountExists: "Benutzername existiert bereits.",
     required: "Benutzername und Passwort duerfen nicht leer sein.",
@@ -274,7 +263,6 @@ const I18N = {
     createdAt: "Erstellt",
     lastLogin: "Letzter Login",
     lastEdit: "Letzte Bearbeitung",
-    exportDone: "Export erstellt.",
     chooseLang: "Sprache waehlen",
     showPassword: "Anzeigen",
     hidePassword: "Verbergen",
@@ -304,8 +292,6 @@ const I18N = {
     viewProfile: "Vedi profilo",
     editProfile: "Modifica profilo",
     deleteAccount: "Elimina account",
-    exportTxt: "Esporta TXT",
-    exportJson: "Esporta JSON",
     saveChanges: "Salva modifiche",
     accountExists: "Nome utente gia esistente.",
     required: "Nome utente e password non possono essere vuoti.",
@@ -322,7 +308,6 @@ const I18N = {
     createdAt: "Creato",
     lastLogin: "Ultimo accesso",
     lastEdit: "Ultima modifica",
-    exportDone: "Esportazione generata.",
     chooseLang: "Scegli lingua",
     showPassword: "Mostra",
     hidePassword: "Nascondi",
@@ -352,8 +337,6 @@ const I18N = {
     viewProfile: "Ver perfil",
     editProfile: "Editar perfil",
     deleteAccount: "Excluir conta",
-    exportTxt: "Exportar TXT",
-    exportJson: "Exportar JSON",
     saveChanges: "Salvar alteracoes",
     accountExists: "Nome de usuario ja existe.",
     required: "Usuario e senha nao podem ficar vazios.",
@@ -370,7 +353,6 @@ const I18N = {
     createdAt: "Criado em",
     lastLogin: "Ultimo login",
     lastEdit: "Ultima edicao",
-    exportDone: "Exportacao gerada.",
     chooseLang: "Escolher idioma",
     showPassword: "Mostrar",
     hidePassword: "Ocultar",
@@ -400,8 +382,6 @@ const I18N = {
     viewProfile: "Profiel bekijken",
     editProfile: "Profiel bewerken",
     deleteAccount: "Account verwijderen",
-    exportTxt: "TXT exporteren",
-    exportJson: "JSON exporteren",
     saveChanges: "Wijzigingen opslaan",
     accountExists: "Gebruikersnaam bestaat al.",
     required: "Gebruikersnaam en wachtwoord mogen niet leeg zijn.",
@@ -418,7 +398,6 @@ const I18N = {
     createdAt: "Aangemaakt op",
     lastLogin: "Laatste login",
     lastEdit: "Laatst bewerkt",
-    exportDone: "Export gemaakt.",
     chooseLang: "Kies taal",
     showPassword: "Tonen",
     hidePassword: "Verbergen",
@@ -448,8 +427,6 @@ const I18N = {
     viewProfile: "Profili gor",
     editProfile: "Profili duzenle",
     deleteAccount: "Hesabi sil",
-    exportTxt: "TXT disa aktar",
-    exportJson: "JSON disa aktar",
     saveChanges: "Degisiklikleri kaydet",
     accountExists: "Kullanici adi zaten var.",
     required: "Kullanici adi ve sifre bos olamaz.",
@@ -466,7 +443,6 @@ const I18N = {
     createdAt: "Olusturma",
     lastLogin: "Son giris",
     lastEdit: "Son duzenleme",
-    exportDone: "Disa aktarma olusturuldu.",
     chooseLang: "Dil sec",
     showPassword: "Goster",
     hidePassword: "Gizle",
@@ -699,45 +675,6 @@ function App() {
     setMsg(t(lang, "deleted"));
   }
 
-  function exportTxt(account = currentAccount) {
-    if (!account) return;
-    const p = account.profile;
-    const text = [
-      `Username: ${p.username}`,
-      `First Name: ${p.firstName}`,
-      `Last Name: ${p.lastName}`,
-      `Age: ${p.age}`,
-      `Job: ${p.job}`,
-      `Favorite Food: ${p.favoriteFood}`,
-      `City: ${p.city}`,
-      `Hobby: ${p.hobby}`,
-      `Favorite Color: ${p.favoriteColor}`,
-      `Dream Job: ${p.dreamJob}`,
-      `${t(lang, "createdAt")}: ${account.created_at}`,
-      `${t(lang, "lastLogin")}: ${account.last_login}`,
-      `${t(lang, "lastEdit")}: ${account.last_edit}`,
-    ].join("\n");
-    downloadFile(`${p.username}_profile.txt`, text, "text/plain;charset=utf-8");
-    setMsg(t(lang, "exportDone"));
-  }
-
-  function exportJson(account = currentAccount) {
-    if (!account) return;
-    const text = JSON.stringify(
-      {
-        profile: account.profile,
-        stats: {
-          created_at: account.created_at,
-          last_login: account.last_login,
-          last_edit: account.last_edit,
-        },
-      },
-      null,
-      2
-    );
-    downloadFile(`${account.profile.username}_profile.json`, text, "application/json");
-    setMsg(t(lang, "exportDone"));
-  }
 
   return (
     <div className="app">
@@ -894,12 +831,6 @@ function App() {
                       <div className="line">{t(lang, "createdAt")}: {searchResult.account.created_at}</div>
                       <div className="line">{t(lang, "lastLogin")}: {searchResult.account.last_login}</div>
                       <div className="line">{t(lang, "lastEdit")}: {searchResult.account.last_edit}</div>
-                      {isAdmin && (
-                        <div className="actions" style={{ marginTop: 8 }}>
-                          <button onClick={() => exportTxt(searchResult.account)}>{t(lang, "exportTxt")}</button>
-                          <button onClick={() => exportJson(searchResult.account)}>{t(lang, "exportJson")}</button>
-                        </div>
-                      )}
                           </>
                         );
                       })()}
@@ -987,10 +918,26 @@ function App() {
                   )}
                   {searchResult.type === "found" && (
                     <div>
-                      <div>{t(lang, "found")}</div>
-                      <div className="line">{searchResult.account.profile.firstName} {searchResult.account.profile.lastName}</div>
-                      <div className="line">{t(lang, "username")}: {searchResult.account.profile.username}</div>
-                      <div className="line">{t(lang, "job")}: {searchResult.account.profile.job}</div>
+                      {(() => {
+                        const p = normalizeProfile(searchResult.account.profile);
+                        return (
+                          <>
+                            <div>{t(lang, "found")}</div>
+                            <div className="line">{p.firstName} {p.lastName}</div>
+                            <div className="line">{t(lang, "username")}: {p.username}</div>
+                            <div className="line">{t(lang, "job")}: {p.job}</div>
+                            <div className="line">{t(lang, "age")}: {p.age}</div>
+                            <div className="line">{t(lang, "favoriteFood")}: {p.favoriteFood}</div>
+                            <div className="line">{t(lang, "city")}: {p.city}</div>
+                            <div className="line">{t(lang, "hobby")}: {p.hobby}</div>
+                            <div className="line">{t(lang, "favoriteColor")}: {p.favoriteColor}</div>
+                            <div className="line">{t(lang, "dreamJob")}: {p.dreamJob}</div>
+                            <div className="line">{t(lang, "createdAt")}: {searchResult.account.created_at}</div>
+                            <div className="line">{t(lang, "lastLogin")}: {searchResult.account.last_login}</div>
+                            <div className="line">{t(lang, "lastEdit")}: {searchResult.account.last_edit}</div>
+                          </>
+                        );
+                      })()}
                     </div>
                   )}
                 </div>
