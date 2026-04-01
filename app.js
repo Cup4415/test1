@@ -477,6 +477,22 @@ function t(lang, key) {
   return (I18N[lang] && I18N[lang][key]) || I18N.en[key] || key;
 }
 
+function normalizeProfile(profile) {
+  if (!profile) return {};
+  return {
+    username: profile.username ?? profile.userName ?? profile.user_name ?? "",
+    firstName: profile.firstName ?? profile.first_name ?? "",
+    lastName: profile.lastName ?? profile.last_name ?? "",
+    age: profile.age ?? "",
+    job: profile.job ?? "",
+    favoriteFood: profile.favoriteFood ?? profile.favorite_food ?? "",
+    city: profile.city ?? "",
+    hobby: profile.hobby ?? "",
+    favoriteColor: profile.favoriteColor ?? profile.favorite_color ?? "",
+    dreamJob: profile.dreamJob ?? profile.dream_job ?? "",
+  };
+}
+
 async function sha256(text) {
   const enc = new TextEncoder().encode(text);
   const digest = await crypto.subtle.digest("SHA-256", enc);
@@ -861,16 +877,20 @@ function App() {
                   )}
                   {searchResult.type === "found" && (
                     <div>
+                      {(() => {
+                        const p = normalizeProfile(searchResult.account.profile);
+                        return (
+                          <>
                       <div>{t(lang, "found")}</div>
-                      <div className="line">{searchResult.account.profile.firstName} {searchResult.account.profile.lastName}</div>
-                      <div className="line">{t(lang, "username")}: {searchResult.account.profile.username}</div>
-                      <div className="line">{t(lang, "job")}: {searchResult.account.profile.job}</div>
-                      <div className="line">{t(lang, "age")}: {searchResult.account.profile.age}</div>
-                      <div className="line">{t(lang, "favoriteFood")}: {searchResult.account.profile.favoriteFood}</div>
-                      <div className="line">{t(lang, "city")}: {searchResult.account.profile.city}</div>
-                      <div className="line">{t(lang, "hobby")}: {searchResult.account.profile.hobby}</div>
-                      <div className="line">{t(lang, "favoriteColor")}: {searchResult.account.profile.favoriteColor}</div>
-                      <div className="line">{t(lang, "dreamJob")}: {searchResult.account.profile.dreamJob}</div>
+                      <div className="line">{p.firstName} {p.lastName}</div>
+                      <div className="line">{t(lang, "username")}: {p.username}</div>
+                      <div className="line">{t(lang, "job")}: {p.job}</div>
+                      <div className="line">{t(lang, "age")}: {p.age}</div>
+                      <div className="line">{t(lang, "favoriteFood")}: {p.favoriteFood}</div>
+                      <div className="line">{t(lang, "city")}: {p.city}</div>
+                      <div className="line">{t(lang, "hobby")}: {p.hobby}</div>
+                      <div className="line">{t(lang, "favoriteColor")}: {p.favoriteColor}</div>
+                      <div className="line">{t(lang, "dreamJob")}: {p.dreamJob}</div>
                       <div className="line">{t(lang, "createdAt")}: {searchResult.account.created_at}</div>
                       <div className="line">{t(lang, "lastLogin")}: {searchResult.account.last_login}</div>
                       <div className="line">{t(lang, "lastEdit")}: {searchResult.account.last_edit}</div>
@@ -880,6 +900,9 @@ function App() {
                           <button onClick={() => exportJson(searchResult.account)}>{t(lang, "exportJson")}</button>
                         </div>
                       )}
+                          </>
+                        );
+                      })()}
                     </div>
                   )}
                 </div>
