@@ -894,12 +894,6 @@ function App() {
               <button className={mode === "view" ? "active" : ""} onClick={() => setMode("view")}>{t(lang, "viewProfile")}</button>
               <button className={mode === "edit" ? "active" : ""} onClick={() => setMode("edit")}>{t(lang, "editProfile")}</button>
               <button className={mode === "search" ? "active" : ""} onClick={() => setMode("search")}>{t(lang, "search")}</button>
-              {isAdmin && (
-                <>
-                  <button onClick={() => exportTxt(currentAccount)}>{t(lang, "exportTxt")}</button>
-                  <button onClick={() => exportJson(currentAccount)}>{t(lang, "exportJson")}</button>
-                </>
-              )}
               <button className="danger" onClick={handleDelete}>{t(lang, "deleteAccount")}</button>
               <button className="logout" onClick={() => { setCurrentUser(null); setMode("login"); setMsg(t(lang, "logout")); }}>
                 {t(lang, "logout")}
