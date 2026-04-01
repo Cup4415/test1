@@ -1,4 +1,4 @@
-const { useMemo, useState, useEffect } = React;
+const { useMemo, useState, useEffect, useRef } = React;
 
 const API_BASE = "http://127.0.0.1:5175";
 
@@ -509,6 +509,7 @@ function App() {
   const [mode, setMode] = useState("create");
   const [msg, setMsg] = useState("");
   const [searchResult, setSearchResult] = useState(null);
+  const accountsRef = useRef(null);
 
   const [createForm, setCreateForm] = useState({
     username: "",
@@ -532,6 +533,7 @@ function App() {
   const [editForm, setEditForm] = useState(null);
 
   useEffect(() => {
+    accountsRef.current = accounts;
     localStorage.setItem("accounts_web_v1", JSON.stringify(accounts));
   }, [accounts]);
 
@@ -541,6 +543,15 @@ function App() {
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (!isMounted || !data || typeof data !== "object") return;
+        const localAccounts = accountsRef.current || {};
+        if (Object.keys(data).length === 0 && Object.keys(localAccounts).length > 0) {
+          fetch(`${API_BASE}/accounts`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(localAccounts),
+          }).catch(() => {});
+          return;
+        }
         setAccounts(data);
       })
       .catch(() => {});
