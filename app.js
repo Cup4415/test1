@@ -584,6 +584,12 @@ function App() {
     () => (currentUser && accounts[currentUser] ? accounts[currentUser] : null),
     [accounts, currentUser]
   );
+  const isAdmin = useMemo(() => {
+    if (!currentAccount) return false;
+    if (currentAccount.is_admin) return true;
+    const name = (currentAccount.profile && currentAccount.profile.username) || currentUser || "";
+    return ["ADMIN", "ADMIN2"].includes(name);
+  }, [currentAccount, currentUser]);
 
   async function handleCreate(e) {
     e.preventDefault();
@@ -868,7 +874,7 @@ function App() {
                       <div className="line">{t(lang, "createdAt")}: {searchResult.account.created_at}</div>
                       <div className="line">{t(lang, "lastLogin")}: {searchResult.account.last_login}</div>
                       <div className="line">{t(lang, "lastEdit")}: {searchResult.account.last_edit}</div>
-                      {currentAccount && currentAccount.is_admin && (
+                      {isAdmin && (
                         <div className="actions" style={{ marginTop: 8 }}>
                           <button onClick={() => exportTxt(searchResult.account)}>{t(lang, "exportTxt")}</button>
                           <button onClick={() => exportJson(searchResult.account)}>{t(lang, "exportJson")}</button>
@@ -888,7 +894,7 @@ function App() {
               <button className={mode === "view" ? "active" : ""} onClick={() => setMode("view")}>{t(lang, "viewProfile")}</button>
               <button className={mode === "edit" ? "active" : ""} onClick={() => setMode("edit")}>{t(lang, "editProfile")}</button>
               <button className={mode === "search" ? "active" : ""} onClick={() => setMode("search")}>{t(lang, "search")}</button>
-              {currentAccount && currentAccount.is_admin && (
+              {isAdmin && (
                 <>
                   <button onClick={() => exportTxt(currentAccount)}>{t(lang, "exportTxt")}</button>
                   <button onClick={() => exportJson(currentAccount)}>{t(lang, "exportJson")}</button>

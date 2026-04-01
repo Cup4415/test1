@@ -18,6 +18,11 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script type="text/babel" src="app.js?v=20260401-2"></script>
+    <script>
+      const appScript = document.createElement("script");
+      appScript.type = "text/babel";
+      appScript.src = `app.js?v=${Date.now()}`;
+      document.body.appendChild(appScript);
+    </script>
   </body>
 </html>
