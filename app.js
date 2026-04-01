@@ -459,9 +459,7 @@ function App() {
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (!isMounted || !data || typeof data !== "object") return;
-        if (Object.keys(data).length > 0) {
-          setAccounts(data);
-        }
+        setAccounts(data);
       })
       .catch(() => {});
     return () => {
