@@ -677,9 +677,9 @@ function App() {
     setMsg(t(lang, "deleted"));
   }
 
-  function exportTxt() {
-    if (!currentAccount) return;
-    const p = currentAccount.profile;
+  function exportTxt(account = currentAccount) {
+    if (!account) return;
+    const p = account.profile;
     const text = [
       `Username: ${p.username}`,
       `First Name: ${p.firstName}`,
@@ -691,29 +691,29 @@ function App() {
       `Hobby: ${p.hobby}`,
       `Favorite Color: ${p.favoriteColor}`,
       `Dream Job: ${p.dreamJob}`,
-      `${t(lang, "createdAt")}: ${currentAccount.created_at}`,
-      `${t(lang, "lastLogin")}: ${currentAccount.last_login}`,
-      `${t(lang, "lastEdit")}: ${currentAccount.last_edit}`,
+      `${t(lang, "createdAt")}: ${account.created_at}`,
+      `${t(lang, "lastLogin")}: ${account.last_login}`,
+      `${t(lang, "lastEdit")}: ${account.last_edit}`,
     ].join("\n");
     downloadFile(`${p.username}_profile.txt`, text, "text/plain;charset=utf-8");
     setMsg(t(lang, "exportDone"));
   }
 
-  function exportJson() {
-    if (!currentAccount) return;
+  function exportJson(account = currentAccount) {
+    if (!account) return;
     const text = JSON.stringify(
       {
-        profile: currentAccount.profile,
+        profile: account.profile,
         stats: {
-          created_at: currentAccount.created_at,
-          last_login: currentAccount.last_login,
-          last_edit: currentAccount.last_edit,
+          created_at: account.created_at,
+          last_login: account.last_login,
+          last_edit: account.last_edit,
         },
       },
       null,
       2
     );
-    downloadFile(`${currentAccount.profile.username}_profile.json`, text, "application/json");
+    downloadFile(`${account.profile.username}_profile.json`, text, "application/json");
     setMsg(t(lang, "exportDone"));
   }
 
@@ -868,6 +868,12 @@ function App() {
                       <div className="line">{t(lang, "createdAt")}: {searchResult.account.created_at}</div>
                       <div className="line">{t(lang, "lastLogin")}: {searchResult.account.last_login}</div>
                       <div className="line">{t(lang, "lastEdit")}: {searchResult.account.last_edit}</div>
+                      {currentAccount && currentAccount.is_admin && (
+                        <div className="actions" style={{ marginTop: 8 }}>
+                          <button onClick={() => exportTxt(searchResult.account)}>{t(lang, "exportTxt")}</button>
+                          <button onClick={() => exportJson(searchResult.account)}>{t(lang, "exportJson")}</button>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -882,8 +888,12 @@ function App() {
               <button className={mode === "view" ? "active" : ""} onClick={() => setMode("view")}>{t(lang, "viewProfile")}</button>
               <button className={mode === "edit" ? "active" : ""} onClick={() => setMode("edit")}>{t(lang, "editProfile")}</button>
               <button className={mode === "search" ? "active" : ""} onClick={() => setMode("search")}>{t(lang, "search")}</button>
-              <button onClick={exportTxt}>{t(lang, "exportTxt")}</button>
-              <button onClick={exportJson}>{t(lang, "exportJson")}</button>
+              {currentAccount && currentAccount.is_admin && (
+                <>
+                  <button onClick={() => exportTxt(currentAccount)}>{t(lang, "exportTxt")}</button>
+                  <button onClick={() => exportJson(currentAccount)}>{t(lang, "exportJson")}</button>
+                </>
+              )}
               <button className="danger" onClick={handleDelete}>{t(lang, "deleteAccount")}</button>
               <button className="logout" onClick={() => { setCurrentUser(null); setMode("login"); setMsg(t(lang, "logout")); }}>
                 {t(lang, "logout")}
