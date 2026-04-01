@@ -719,7 +719,9 @@ function App() {
             <select value={lang} onChange={(e) => setLang(e.target.value)}>
               {LANGS.map((l) => (
                 <option key={l} value={l}>
-                  {(LANG_LABELS[lang] && LANG_LABELS[lang][l]) || l}
+                  ((LANG_LABELS[lang] && LANG_LABELS[lang][l]) ||
+                    (LANG_LABELS.en && LANG_LABELS.en[l]) ||
+                    l)
                 </option>
               ))}
             </select>
