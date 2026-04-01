@@ -1,1 +1,40 @@
-{}
+{
+    "ADMIN":  {
+                  "password_hash":  "3f4797f376ec15b46f14bb80f5ea8d1c7fd2cfb333ff60a8cbc1e93206b3ae73",
+                  "profile":  {
+                                  "username":  "ADMIN",
+                                  "firstName":  "ADmin",
+                                  "lastName":  "ADMin",
+                                  "age":  "20",
+                                  "job":  "Admin",
+                                  "favoriteFood":  "ADMIn",
+                                  "city":  "ADMIN",
+                                  "hobby":  "aDMIN",
+                                  "favoriteColor":  "Blue",
+                                  "dreamJob":  "Admin"
+                              },
+                  "created_at":  "2026-04-01 22:22:18",
+                  "last_login":  "2026-04-01 22:22:18",
+                  "last_edit":  null,
+                  "is_admin":  true
+              },
+    "ADMIN2":  {
+                   "password_hash":  "3f4797f376ec15b46f14bb80f5ea8d1c7fd2cfb333ff60a8cbc1e93206b3ae73",
+                   "profile":  {
+                                   "username":  "ADMIN2",
+                                   "firstName":  "ADmin",
+                                   "lastName":  "ADMin",
+                                   "age":  "20",
+                                   "job":  "Admin",
+                                   "favoriteFood":  "ADMIn",
+                                   "city":  "ADMIN",
+                                   "hobby":  "aDMIN",
+                                   "favoriteColor":  "Blue",
+                                   "dreamJob":  "Admin"
+                               },
+                   "created_at":  "2026-04-01 22:22:18",
+                   "last_login":  "2026-04-01 22:22:18",
+                   "last_edit":  null,
+                   "is_admin":  true
+               }
+}
