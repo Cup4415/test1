@@ -93,6 +93,9 @@ const I18N = {
     quickActions: "Quick actions",
     accountAccessTitle: "Account access",
     accountAccessSub: "Jump into accounts or sign out in one click.",
+    accountsTitle: "All accounts",
+    accountsSub: "Every account stored on this device.",
+    noAccounts: "No accounts yet.",
     create: "Create account",
     login: "Login",
     search: "Search user",
@@ -158,6 +161,9 @@ const I18N = {
     quickActions: "Actions rapides",
     accountAccessTitle: "Acces comptes",
     accountAccessSub: "Entrez dans les comptes ou deconnectez-vous en un clic.",
+    accountsTitle: "Tous les comptes",
+    accountsSub: "Tous les comptes stockes sur cet appareil.",
+    noAccounts: "Aucun compte pour l'instant.",
     create: "Creer un compte",
     login: "Se connecter",
     search: "Rechercher un utilisateur",
@@ -221,6 +227,9 @@ const I18N = {
     quickActions: "Acciones rapidas",
     accountAccessTitle: "Acceso a cuentas",
     accountAccessSub: "Entra a cuentas o cierra sesion en un clic.",
+    accountsTitle: "Todas las cuentas",
+    accountsSub: "Todas las cuentas guardadas en este dispositivo.",
+    noAccounts: "Aun no hay cuentas.",
     create: "Crear cuenta",
     login: "Iniciar sesion",
     search: "Buscar usuario",
@@ -284,6 +293,9 @@ const I18N = {
     quickActions: "Schnellaktionen",
     accountAccessTitle: "Kontozugriff",
     accountAccessSub: "Konten betreten oder abmelden mit einem Klick.",
+    accountsTitle: "Alle Konten",
+    accountsSub: "Alle Konten auf diesem Geraet.",
+    noAccounts: "Noch keine Konten.",
     create: "Konto erstellen",
     login: "Anmelden",
     search: "Benutzer suchen",
@@ -347,6 +359,9 @@ const I18N = {
     quickActions: "Azioni rapide",
     accountAccessTitle: "Accesso account",
     accountAccessSub: "Entra negli account o esci con un clic.",
+    accountsTitle: "Tutti gli account",
+    accountsSub: "Tutti gli account su questo dispositivo.",
+    noAccounts: "Nessun account per ora.",
     create: "Crea account",
     login: "Accedi",
     search: "Cerca utente",
@@ -410,6 +425,9 @@ const I18N = {
     quickActions: "Acoes rapidas",
     accountAccessTitle: "Acesso a contas",
     accountAccessSub: "Entre nas contas ou saia com um clique.",
+    accountsTitle: "Todas as contas",
+    accountsSub: "Todas as contas neste dispositivo.",
+    noAccounts: "Ainda nao ha contas.",
     create: "Criar conta",
     login: "Entrar",
     search: "Pesquisar usuario",
@@ -473,6 +491,9 @@ const I18N = {
     quickActions: "Snelle acties",
     accountAccessTitle: "Accounttoegang",
     accountAccessSub: "Ga naar accounts of log uit met een klik.",
+    accountsTitle: "Alle accounts",
+    accountsSub: "Alle accounts op dit apparaat.",
+    noAccounts: "Nog geen accounts.",
     create: "Account maken",
     login: "Inloggen",
     search: "Gebruiker zoeken",
@@ -536,6 +557,9 @@ const I18N = {
     quickActions: "Hizli islemler",
     accountAccessTitle: "Hesap erisimi",
     accountAccessSub: "Hesaplara gir veya tek tikla cikis yap.",
+    accountsTitle: "Tum hesaplar",
+    accountsSub: "Bu cihazdaki tum hesaplar.",
+    noAccounts: "Henuz hesap yok.",
     create: "Hesap olustur",
     login: "Giris yap",
     search: "Kullanici ara",
@@ -669,6 +693,7 @@ function App() {
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [searchUsername, setSearchUsername] = useState("");
   const [editForm, setEditForm] = useState(null);
+  const showAccounts = mode === "accounts";
 
   useEffect(() => {
     accountsRef.current = accounts;
@@ -821,6 +846,40 @@ function App() {
     setMsg(t(lang, "deleted"));
   }
 
+  function renderAccountsList() {
+    const entries = Object.entries(accounts);
+    if (!entries.length) {
+      return (
+        <div className="card">
+          <div className="sub">{t(lang, "noAccounts")}</div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="grid">
+        {entries.map(([username, account]) => {
+          const p = normalizeProfile(account.profile);
+          const displayName =
+            [p.firstName, p.lastName].filter(Boolean).join(" ") || p.username || username;
+          return (
+            <div className="card profile" key={username}>
+              <div className="line"><strong>{displayName}</strong></div>
+              <div className="line">{t(lang, "username")}: {p.username || username}</div>
+              <div className="line">{t(lang, "age")}: {p.age || "-"}</div>
+              <div className="line">{t(lang, "job")}: {p.job || "-"}</div>
+              <div className="line">{t(lang, "city")}: {p.city || "-"}</div>
+              <div className="stats">
+                <div>{t(lang, "createdAt")}: {account.created_at || "-"}</div>
+                <div>{t(lang, "lastLogin")}: {account.last_login || "-"}</div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
 
   return (
     <div className="app">
@@ -868,14 +927,25 @@ function App() {
           <div className="sub">{t(lang, "accountManagerSub")}</div>
         </div>
         <div className="hero-actions">
-          <button className="primary" onClick={() => setMode(currentUser ? "edit" : "create")}>
+          <button className="primary" onClick={() => setMode("accounts")}>
             {t(lang, "accountManager")}
           </button>
         </div>
       </div>
 
+      {showAccounts && (
+        <>
+          <div className="card">
+            <div className="eyebrow">{t(lang, "quickActions")}</div>
+            <h2>{t(lang, "accountsTitle")}</h2>
+            <div className="sub">{t(lang, "accountsSub")}</div>
+          </div>
+          {renderAccountsList()}
+        </>
+      )}
+
       {!currentUser ? (
-        mode === "home" ? null : (
+        showAccounts || mode === "home" ? null : (
           <div className="card">
             <div className="tabs">
               <button className={mode === "create" ? "active" : ""} onClick={() => setMode("create")}>
@@ -1024,7 +1094,7 @@ function App() {
           </div>
         )
       ) : (
-        mode === "home" ? null : (
+        showAccounts || mode === "home" ? null : (
           <div className="grid">
             <div className="card">
               <div className="actions">
