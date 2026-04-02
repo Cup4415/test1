@@ -163,6 +163,10 @@ const I18N = {
     copyCode: "Copy code",
     join: "Join",
     codeCopied: "Code copied.",
+    loginRequired: "Please log in first.",
+    invalidCode: "Invalid group code.",
+    joinedGroup: "Joined group",
+    createdGroup: "Created group",
   },
   fr: {
     title: "MENU",
@@ -238,6 +242,10 @@ const I18N = {
     copyCode: "Copier le code",
     join: "Rejoindre",
     codeCopied: "Code copie.",
+    loginRequired: "Veuillez vous connecter d'abord.",
+    invalidCode: "Code de groupe invalide.",
+    joinedGroup: "Groupe rejoint",
+    createdGroup: "Groupe cree",
   },
   es: {
     title: "MENU",
@@ -313,6 +321,10 @@ const I18N = {
     copyCode: "Copiar codigo",
     join: "Unirse",
     codeCopied: "Codigo copiado.",
+    loginRequired: "Inicia sesion primero.",
+    invalidCode: "Codigo de grupo invalido.",
+    joinedGroup: "Grupo unido",
+    createdGroup: "Grupo creado",
   },
   de: {
     title: "MENU",
@@ -388,6 +400,10 @@ const I18N = {
     copyCode: "Code kopieren",
     join: "Beitreten",
     codeCopied: "Code kopiert.",
+    loginRequired: "Bitte zuerst anmelden.",
+    invalidCode: "Ungueltiger Gruppencode.",
+    joinedGroup: "Gruppe beigetreten",
+    createdGroup: "Gruppe erstellt",
   },
   it: {
     title: "MENU",
@@ -463,6 +479,10 @@ const I18N = {
     copyCode: "Copia codice",
     join: "Unisciti",
     codeCopied: "Codice copiato.",
+    loginRequired: "Accedi prima.",
+    invalidCode: "Codice gruppo non valido.",
+    joinedGroup: "Gruppo unito",
+    createdGroup: "Gruppo creato",
   },
   pt: {
     title: "MENU",
@@ -538,6 +558,10 @@ const I18N = {
     copyCode: "Copiar codigo",
     join: "Entrar",
     codeCopied: "Codigo copiado.",
+    loginRequired: "Faca login primeiro.",
+    invalidCode: "Codigo de grupo invalido.",
+    joinedGroup: "Grupo conectado",
+    createdGroup: "Grupo criado",
   },
   nl: {
     title: "MENU",
@@ -613,6 +637,10 @@ const I18N = {
     copyCode: "Code kopieren",
     join: "Aansluiten",
     codeCopied: "Code gekopieerd.",
+    loginRequired: "Log eerst in.",
+    invalidCode: "Ongeldige groepscode.",
+    joinedGroup: "Groep joined",
+    createdGroup: "Groep gemaakt",
   },
   tr: {
     title: "MENU",
@@ -688,6 +716,10 @@ const I18N = {
     copyCode: "Kodu kopyala",
     join: "Katil",
     codeCopied: "Kod kopyalandi.",
+    loginRequired: "Once giris yap.",
+    invalidCode: "Gecersiz grup kodu.",
+    joinedGroup: "Gruba katildi",
+    createdGroup: "Grup olusturuldu",
   },
 };
 
@@ -768,11 +800,22 @@ function App() {
   const showAccounts = mode === "accounts";
   const [groupCode, setGroupCode] = useState("");
   const [joinCode, setJoinCode] = useState("");
+  const [groups, setGroups] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("chat_groups_v1")) || {};
+    } catch {
+      return {};
+    }
+  });
 
   useEffect(() => {
     accountsRef.current = accounts;
     localStorage.setItem("accounts_web_v1", JSON.stringify(accounts));
   }, [accounts]);
+
+  useEffect(() => {
+    localStorage.setItem("chat_groups_v1", JSON.stringify(groups));
+  }, [groups]);
 
   useEffect(() => {
     let isMounted = true;
@@ -930,8 +973,16 @@ function App() {
   }
 
   function handleCreateGroup() {
+    if (!currentUser) {
+      setMsg(t(lang, "loginRequired"));
+      return;
+    }
     const code = makeGroupCode();
     setGroupCode(code);
+    setGroups({
+      ...groups,
+      [code]: { owner: currentUser, created_at: nowText() },
+    });
     setMsg("");
   }
 
@@ -943,6 +994,19 @@ function App() {
     } catch {
       setMsg(groupCode);
     }
+  }
+
+  function handleJoinGroup() {
+    if (!currentUser) {
+      setMsg(t(lang, "loginRequired"));
+      return;
+    }
+    const code = joinCode.trim().toUpperCase();
+    if (!code || !groups[code]) {
+      setMsg(t(lang, "invalidCode"));
+      return;
+    }
+    setMsg(`${t(lang, "joinedGroup")}: ${code}`);
   }
 
   function renderAccountsList() {
@@ -1071,7 +1135,7 @@ function App() {
                 <input value={joinCode} onChange={(e) => setJoinCode(e.target.value.toUpperCase())} />
               </div>
               <div className="actions">
-                <button className="primary">{t(lang, "join")}</button>
+                <button className="primary" onClick={handleJoinGroup}>{t(lang, "join")}</button>
               </div>
             </div>
           </div>
