@@ -145,6 +145,7 @@ const I18N = {
     myLastEditWas: "My last edit was",
     enterAccounts: "Enter accounts",
     hideProfile: "Hide profile",
+    accountManager: "Gestionnaire de comptes",
   },
   fr: {
     title: "MENU",
@@ -809,6 +810,9 @@ function App() {
             onClick={() => setMode(currentUser ? "view" : "login")}
           >
             {t(lang, "enterAccounts")}
+          </button>
+          <button onClick={() => setMode(currentUser ? "edit" : "create")}>
+            {t(lang, "accountManager")}
           </button>
         </div>
       </div>
