@@ -167,6 +167,10 @@ const I18N = {
     invalidCode: "Invalid group code.",
     joinedGroup: "Joined group",
     createdGroup: "Created group",
+    groups: "Groups",
+    groupsTitle: "Groups",
+    groupsSub: "Groups created on this device.",
+    noGroups: "No groups yet.",
   },
   fr: {
     title: "MENU",
@@ -246,6 +250,10 @@ const I18N = {
     invalidCode: "Code de groupe invalide.",
     joinedGroup: "Groupe rejoint",
     createdGroup: "Groupe cree",
+    groups: "Groupes",
+    groupsTitle: "Groupes",
+    groupsSub: "Groupes crees sur cet appareil.",
+    noGroups: "Aucun groupe pour l'instant.",
   },
   es: {
     title: "MENU",
@@ -325,6 +333,10 @@ const I18N = {
     invalidCode: "Codigo de grupo invalido.",
     joinedGroup: "Grupo unido",
     createdGroup: "Grupo creado",
+    groups: "Grupos",
+    groupsTitle: "Grupos",
+    groupsSub: "Grupos creados en este dispositivo.",
+    noGroups: "Aun no hay grupos.",
   },
   de: {
     title: "MENU",
@@ -404,6 +416,10 @@ const I18N = {
     invalidCode: "Ungueltiger Gruppencode.",
     joinedGroup: "Gruppe beigetreten",
     createdGroup: "Gruppe erstellt",
+    groups: "Gruppen",
+    groupsTitle: "Gruppen",
+    groupsSub: "Gruppen auf diesem Geraet.",
+    noGroups: "Noch keine Gruppen.",
   },
   it: {
     title: "MENU",
@@ -483,6 +499,10 @@ const I18N = {
     invalidCode: "Codice gruppo non valido.",
     joinedGroup: "Gruppo unito",
     createdGroup: "Gruppo creato",
+    groups: "Gruppi",
+    groupsTitle: "Gruppi",
+    groupsSub: "Gruppi creati su questo dispositivo.",
+    noGroups: "Nessun gruppo per ora.",
   },
   pt: {
     title: "MENU",
@@ -562,6 +582,10 @@ const I18N = {
     invalidCode: "Codigo de grupo invalido.",
     joinedGroup: "Grupo conectado",
     createdGroup: "Grupo criado",
+    groups: "Grupos",
+    groupsTitle: "Grupos",
+    groupsSub: "Grupos neste dispositivo.",
+    noGroups: "Ainda nao ha grupos.",
   },
   nl: {
     title: "MENU",
@@ -641,6 +665,10 @@ const I18N = {
     invalidCode: "Ongeldige groepscode.",
     joinedGroup: "Groep joined",
     createdGroup: "Groep gemaakt",
+    groups: "Groepen",
+    groupsTitle: "Groepen",
+    groupsSub: "Groepen op dit apparaat.",
+    noGroups: "Nog geen groepen.",
   },
   tr: {
     title: "MENU",
@@ -720,6 +748,10 @@ const I18N = {
     invalidCode: "Gecersiz grup kodu.",
     joinedGroup: "Gruba katildi",
     createdGroup: "Grup olusturuldu",
+    groups: "Gruplar",
+    groupsTitle: "Gruplar",
+    groupsSub: "Bu cihazdaki gruplar.",
+    noGroups: "Henuz grup yok.",
   },
 };
 
@@ -798,6 +830,7 @@ function App() {
   const [searchUsername, setSearchUsername] = useState("");
   const [editForm, setEditForm] = useState(null);
   const showAccounts = mode === "accounts";
+  const showGroups = mode === "groups";
   const [groupCode, setGroupCode] = useState("");
   const [joinCode, setJoinCode] = useState("");
   const [groups, setGroups] = useState(() => {
@@ -1048,6 +1081,29 @@ function App() {
     );
   }
 
+  function renderGroupsList() {
+    const entries = Object.entries(groups);
+    if (!entries.length) {
+      return (
+        <div className="card">
+          <div className="sub">{t(lang, "noGroups")}</div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="grid">
+        {entries.map(([code, group]) => (
+          <div className="card profile" key={code}>
+            <div className="line"><strong>{t(lang, "groupCode")}: {code}</strong></div>
+            <div className="line">{t(lang, "createdAt")}: {group.created_at || "-"}</div>
+            <div className="line">{t(lang, "username")}: {group.owner || "-"}</div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
 
   return (
     <div className="app">
@@ -1145,6 +1201,33 @@ function App() {
         </div>
       )}
 
+      <div className="card hero">
+        <div>
+          <div className="eyebrow">{t(lang, "quickActions")}</div>
+          <h2>{t(lang, "groupsTitle")}</h2>
+          <div className="sub">{t(lang, "groupsSub")}</div>
+        </div>
+        <div className="hero-actions">
+          <button className="primary" onClick={() => setMode("groups")}>
+            {t(lang, "groups")}
+          </button>
+        </div>
+      </div>
+
+      {showGroups && (
+        <>
+          <div className="card">
+            <div className="eyebrow">{t(lang, "quickActions")}</div>
+            <h2>{t(lang, "groupsTitle")}</h2>
+            <div className="sub">{t(lang, "groupsSub")}</div>
+            <div className="actions" style={{ marginTop: 12 }}>
+              <button onClick={() => setMode("home")}>{t(lang, "hideProfile")}</button>
+            </div>
+          </div>
+          {renderGroupsList()}
+        </>
+      )}
+
       {showAccounts && (
         <>
           <div className="card">
@@ -1160,7 +1243,7 @@ function App() {
       )}
 
       {!currentUser ? (
-        showAccounts || mode === "home" || mode === "chat" ? null : (
+        showAccounts || showGroups || mode === "home" || mode === "chat" ? null : (
           <div className="card">
             <div className="tabs">
               <button className={mode === "create" ? "active" : ""} onClick={() => setMode("create")}>
@@ -1309,7 +1392,7 @@ function App() {
           </div>
         )
       ) : (
-        showAccounts || mode === "home" || mode === "chat" ? null : (
+        showAccounts || showGroups || mode === "home" || mode === "chat" ? null : (
           <div className="grid">
             <div className="card">
               <div className="actions">
