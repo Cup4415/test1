@@ -868,10 +868,15 @@ function App() {
               <div className="line">{t(lang, "username")}: {p.username || username}</div>
               <div className="line">{t(lang, "age")}: {p.age || "-"}</div>
               <div className="line">{t(lang, "job")}: {p.job || "-"}</div>
+              <div className="line">{t(lang, "favoriteFood")}: {p.favoriteFood || "-"}</div>
               <div className="line">{t(lang, "city")}: {p.city || "-"}</div>
+              <div className="line">{t(lang, "hobby")}: {p.hobby || "-"}</div>
+              <div className="line">{t(lang, "favoriteColor")}: {p.favoriteColor || "-"}</div>
+              <div className="line">{t(lang, "dreamJob")}: {p.dreamJob || "-"}</div>
               <div className="stats">
                 <div>{t(lang, "createdAt")}: {account.created_at || "-"}</div>
                 <div>{t(lang, "lastLogin")}: {account.last_login || "-"}</div>
+                <div>{t(lang, "lastEdit")}: {account.last_edit || "-"}</div>
               </div>
             </div>
           );
