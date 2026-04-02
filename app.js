@@ -155,6 +155,10 @@ const I18N = {
     accountManagerTitle: "Account manager",
     accountManagerSub: "Create and edit profiles in one place.",
     chat: "Chat",
+    chatTitle: "Chat options",
+    chatSub: "Start a group or join one.",
+    createGroup: "Create a group",
+    joinGroup: "Join a group",
   },
   fr: {
     title: "MENU",
@@ -222,6 +226,10 @@ const I18N = {
     accountManagerTitle: "Gestionnaire de comptes",
     accountManagerSub: "Creer et modifier les profils au meme endroit.",
     chat: "Chat",
+    chatTitle: "Options de chat",
+    chatSub: "Creez un groupe ou rejoignez-en un.",
+    createGroup: "Creer un groupe",
+    joinGroup: "Rejoindre un groupe",
   },
   es: {
     title: "MENU",
@@ -289,6 +297,10 @@ const I18N = {
     accountManagerTitle: "Gestor de cuentas",
     accountManagerSub: "Crea y edita perfiles en un solo lugar.",
     chat: "Chat",
+    chatTitle: "Opciones de chat",
+    chatSub: "Crea un grupo o unete a uno.",
+    createGroup: "Crear un grupo",
+    joinGroup: "Unirse a un grupo",
   },
   de: {
     title: "MENU",
@@ -356,6 +368,10 @@ const I18N = {
     accountManagerTitle: "Kontoverwaltung",
     accountManagerSub: "Profile anlegen und bearbeiten an einem Ort.",
     chat: "Chat",
+    chatTitle: "Chat-Optionen",
+    chatSub: "Gruppe erstellen oder beitreten.",
+    createGroup: "Gruppe erstellen",
+    joinGroup: "Gruppe beitreten",
   },
   it: {
     title: "MENU",
@@ -423,6 +439,10 @@ const I18N = {
     accountManagerTitle: "Gestore account",
     accountManagerSub: "Crea e modifica profili in un unico posto.",
     chat: "Chat",
+    chatTitle: "Opzioni chat",
+    chatSub: "Crea un gruppo o unisciti a uno.",
+    createGroup: "Crea un gruppo",
+    joinGroup: "Unisciti a un gruppo",
   },
   pt: {
     title: "MENU",
@@ -490,6 +510,10 @@ const I18N = {
     accountManagerTitle: "Gerenciador de contas",
     accountManagerSub: "Crie e edite perfis em um so lugar.",
     chat: "Chat",
+    chatTitle: "Opcoes de chat",
+    chatSub: "Crie um grupo ou entre em um.",
+    createGroup: "Criar um grupo",
+    joinGroup: "Entrar em um grupo",
   },
   nl: {
     title: "MENU",
@@ -557,6 +581,10 @@ const I18N = {
     accountManagerTitle: "Accountbeheer",
     accountManagerSub: "Maak en bewerk profielen op een plek.",
     chat: "Chat",
+    chatTitle: "Chatopties",
+    chatSub: "Maak een groep of sluit je aan.",
+    createGroup: "Groep maken",
+    joinGroup: "Aansluiten bij groep",
   },
   tr: {
     title: "MENU",
@@ -624,6 +652,10 @@ const I18N = {
     accountManagerTitle: "Hesap yoneticisi",
     accountManagerSub: "Profilleri tek yerde olustur ve duzenle.",
     chat: "Sohbet",
+    chatTitle: "Sohbet secenekleri",
+    chatSub: "Grup olustur veya gruba katil.",
+    createGroup: "Grup olustur",
+    joinGroup: "Gruba katil",
   },
 };
 
@@ -950,14 +982,27 @@ function App() {
         <div>
           <div className="eyebrow">{t(lang, "quickActions")}</div>
           <h2>{t(lang, "chat")}</h2>
-          <div className="sub">{t(lang, "chat")}</div>
+          <div className="sub">{t(lang, "chatSub")}</div>
         </div>
         <div className="hero-actions">
-          <button className="primary" onClick={() => setMode("home")}>
+          <button className="primary" onClick={() => setMode("chat")}>
             {t(lang, "chat")}
           </button>
         </div>
       </div>
+
+      {mode === "chat" && (
+        <div className="card">
+          <div className="eyebrow">{t(lang, "quickActions")}</div>
+          <h2>{t(lang, "chatTitle")}</h2>
+          <div className="sub">{t(lang, "chatSub")}</div>
+          <div className="actions" style={{ marginTop: 12 }}>
+            <button className="primary">{t(lang, "createGroup")}</button>
+            <button className="primary">{t(lang, "joinGroup")}</button>
+            <button onClick={() => setMode("home")}>{t(lang, "hideProfile")}</button>
+          </div>
+        </div>
+      )}
 
       {showAccounts && (
         <>
