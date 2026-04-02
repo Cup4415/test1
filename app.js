@@ -159,6 +159,10 @@ const I18N = {
     chatSub: "Start a group or join one.",
     createGroup: "Create a group",
     joinGroup: "Join a group",
+    groupCode: "Group code",
+    copyCode: "Copy code",
+    join: "Join",
+    codeCopied: "Code copied.",
   },
   fr: {
     title: "MENU",
@@ -230,6 +234,10 @@ const I18N = {
     chatSub: "Creez un groupe ou rejoignez-en un.",
     createGroup: "Creer un groupe",
     joinGroup: "Rejoindre un groupe",
+    groupCode: "Code du groupe",
+    copyCode: "Copier le code",
+    join: "Rejoindre",
+    codeCopied: "Code copie.",
   },
   es: {
     title: "MENU",
@@ -301,6 +309,10 @@ const I18N = {
     chatSub: "Crea un grupo o unete a uno.",
     createGroup: "Crear un grupo",
     joinGroup: "Unirse a un grupo",
+    groupCode: "Codigo del grupo",
+    copyCode: "Copiar codigo",
+    join: "Unirse",
+    codeCopied: "Codigo copiado.",
   },
   de: {
     title: "MENU",
@@ -372,6 +384,10 @@ const I18N = {
     chatSub: "Gruppe erstellen oder beitreten.",
     createGroup: "Gruppe erstellen",
     joinGroup: "Gruppe beitreten",
+    groupCode: "Gruppencode",
+    copyCode: "Code kopieren",
+    join: "Beitreten",
+    codeCopied: "Code kopiert.",
   },
   it: {
     title: "MENU",
@@ -443,6 +459,10 @@ const I18N = {
     chatSub: "Crea un gruppo o unisciti a uno.",
     createGroup: "Crea un gruppo",
     joinGroup: "Unisciti a un gruppo",
+    groupCode: "Codice gruppo",
+    copyCode: "Copia codice",
+    join: "Unisciti",
+    codeCopied: "Codice copiato.",
   },
   pt: {
     title: "MENU",
@@ -514,6 +534,10 @@ const I18N = {
     chatSub: "Crie um grupo ou entre em um.",
     createGroup: "Criar um grupo",
     joinGroup: "Entrar em um grupo",
+    groupCode: "Codigo do grupo",
+    copyCode: "Copiar codigo",
+    join: "Entrar",
+    codeCopied: "Codigo copiado.",
   },
   nl: {
     title: "MENU",
@@ -585,6 +609,10 @@ const I18N = {
     chatSub: "Maak een groep of sluit je aan.",
     createGroup: "Groep maken",
     joinGroup: "Aansluiten bij groep",
+    groupCode: "Groepscode",
+    copyCode: "Code kopieren",
+    join: "Aansluiten",
+    codeCopied: "Code gekopieerd.",
   },
   tr: {
     title: "MENU",
@@ -656,6 +684,10 @@ const I18N = {
     chatSub: "Grup olustur veya gruba katil.",
     createGroup: "Grup olustur",
     joinGroup: "Gruba katil",
+    groupCode: "Grup kodu",
+    copyCode: "Kodu kopyala",
+    join: "Katil",
+    codeCopied: "Kod kopyalandi.",
   },
 };
 
@@ -734,6 +766,8 @@ function App() {
   const [searchUsername, setSearchUsername] = useState("");
   const [editForm, setEditForm] = useState(null);
   const showAccounts = mode === "accounts";
+  const [groupCode, setGroupCode] = useState("");
+  const [joinCode, setJoinCode] = useState("");
 
   useEffect(() => {
     accountsRef.current = accounts;
@@ -886,6 +920,31 @@ function App() {
     setMsg(t(lang, "deleted"));
   }
 
+  function makeGroupCode() {
+    const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let code = "";
+    for (let i = 0; i < 6; i += 1) {
+      code += alphabet[Math.floor(Math.random() * alphabet.length)];
+    }
+    return code;
+  }
+
+  function handleCreateGroup() {
+    const code = makeGroupCode();
+    setGroupCode(code);
+    setMsg("");
+  }
+
+  async function handleCopyCode() {
+    if (!groupCode) return;
+    try {
+      await navigator.clipboard.writeText(groupCode);
+      setMsg(t(lang, "codeCopied"));
+    } catch {
+      setMsg(groupCode);
+    }
+  }
+
   function renderAccountsList() {
     const entries = Object.entries(accounts);
     if (!entries.length) {
@@ -996,9 +1055,27 @@ function App() {
           <div className="eyebrow">{t(lang, "quickActions")}</div>
           <h2>{t(lang, "chatTitle")}</h2>
           <div className="sub">{t(lang, "chatSub")}</div>
+          <div className="row" style={{ marginTop: 12 }}>
+            <div className="card profile">
+              <div className="line"><strong>{t(lang, "createGroup")}</strong></div>
+              <div className="line">{t(lang, "groupCode")}: {groupCode || "-"}</div>
+              <div className="actions" style={{ marginTop: 8 }}>
+                <button className="primary" onClick={handleCreateGroup}>{t(lang, "createGroup")}</button>
+                <button className="ghost" onClick={handleCopyCode} disabled={!groupCode}>{t(lang, "copyCode")}</button>
+              </div>
+            </div>
+            <div className="card profile">
+              <div className="line"><strong>{t(lang, "joinGroup")}</strong></div>
+              <div className="field" style={{ marginTop: 8 }}>
+                <label>{t(lang, "groupCode")}</label>
+                <input value={joinCode} onChange={(e) => setJoinCode(e.target.value.toUpperCase())} />
+              </div>
+              <div className="actions">
+                <button className="primary">{t(lang, "join")}</button>
+              </div>
+            </div>
+          </div>
           <div className="actions" style={{ marginTop: 12 }}>
-            <button className="primary">{t(lang, "createGroup")}</button>
-            <button className="primary">{t(lang, "joinGroup")}</button>
             <button onClick={() => setMode("home")}>{t(lang, "hideProfile")}</button>
           </div>
         </div>
