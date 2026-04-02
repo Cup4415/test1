@@ -90,6 +90,9 @@ const I18N = {
   en: {
     title: "MENU",
     subtitle: "Create, login, search, edit, export",
+    quickActions: "Quick actions",
+    accountAccessTitle: "Account access",
+    accountAccessSub: "Jump into accounts or sign out in one click.",
     create: "Create account",
     login: "Login",
     search: "Search user",
@@ -145,11 +148,16 @@ const I18N = {
     myLastEditWas: "My last edit was",
     enterAccounts: "Enter accounts",
     hideProfile: "Hide profile",
-    accountManager: "Gestionnaire de comptes",
+    accountManager: "Account manager",
+    accountManagerTitle: "Account manager",
+    accountManagerSub: "Create and edit profiles in one place.",
   },
   fr: {
     title: "MENU",
     subtitle: "Creer, connecter, rechercher, modifier, exporter",
+    quickActions: "Actions rapides",
+    accountAccessTitle: "Acces comptes",
+    accountAccessSub: "Entrez dans les comptes ou deconnectez-vous en un clic.",
     create: "Creer un compte",
     login: "Se connecter",
     search: "Rechercher un utilisateur",
@@ -203,10 +211,16 @@ const I18N = {
     myAccountCreatedAt: "Mon compte a ete cree le",
     myLastLoginWas: "Ma derniere connexion etait",
     myLastEditWas: "Ma derniere modification etait",
+    accountManager: "Gestionnaire de comptes",
+    accountManagerTitle: "Gestionnaire de comptes",
+    accountManagerSub: "Creer et modifier les profils au meme endroit.",
   },
   es: {
     title: "MENU",
     subtitle: "Crear, iniciar sesion, buscar, editar, exportar",
+    quickActions: "Acciones rapidas",
+    accountAccessTitle: "Acceso a cuentas",
+    accountAccessSub: "Entra a cuentas o cierra sesion en un clic.",
     create: "Crear cuenta",
     login: "Iniciar sesion",
     search: "Buscar usuario",
@@ -260,10 +274,16 @@ const I18N = {
     myAccountCreatedAt: "Mi cuenta fue creada el",
     myLastLoginWas: "Mi ultimo acceso fue",
     myLastEditWas: "Mi ultima edicion fue",
+    accountManager: "Gestor de cuentas",
+    accountManagerTitle: "Gestor de cuentas",
+    accountManagerSub: "Crea y edita perfiles en un solo lugar.",
   },
   de: {
     title: "MENU",
     subtitle: "Erstellen, anmelden, suchen, bearbeiten, exportieren",
+    quickActions: "Schnellaktionen",
+    accountAccessTitle: "Kontozugriff",
+    accountAccessSub: "Konten betreten oder abmelden mit einem Klick.",
     create: "Konto erstellen",
     login: "Anmelden",
     search: "Benutzer suchen",
@@ -317,10 +337,16 @@ const I18N = {
     myAccountCreatedAt: "Mein Konto wurde erstellt am",
     myLastLoginWas: "Mein letzter Login war",
     myLastEditWas: "Meine letzte Bearbeitung war",
+    accountManager: "Kontoverwaltung",
+    accountManagerTitle: "Kontoverwaltung",
+    accountManagerSub: "Profile anlegen und bearbeiten an einem Ort.",
   },
   it: {
     title: "MENU",
     subtitle: "Crea, accedi, cerca, modifica, esporta",
+    quickActions: "Azioni rapide",
+    accountAccessTitle: "Accesso account",
+    accountAccessSub: "Entra negli account o esci con un clic.",
     create: "Crea account",
     login: "Accedi",
     search: "Cerca utente",
@@ -374,10 +400,16 @@ const I18N = {
     myAccountCreatedAt: "Il mio account e stato creato il",
     myLastLoginWas: "Il mio ultimo accesso e stato",
     myLastEditWas: "La mia ultima modifica e stata",
+    accountManager: "Gestore account",
+    accountManagerTitle: "Gestore account",
+    accountManagerSub: "Crea e modifica profili in un unico posto.",
   },
   pt: {
     title: "MENU",
     subtitle: "Criar, entrar, pesquisar, editar, exportar",
+    quickActions: "Acoes rapidas",
+    accountAccessTitle: "Acesso a contas",
+    accountAccessSub: "Entre nas contas ou saia com um clique.",
     create: "Criar conta",
     login: "Entrar",
     search: "Pesquisar usuario",
@@ -431,10 +463,16 @@ const I18N = {
     myAccountCreatedAt: "Minha conta foi criada em",
     myLastLoginWas: "Meu ultimo login foi",
     myLastEditWas: "Minha ultima edicao foi",
+    accountManager: "Gerenciador de contas",
+    accountManagerTitle: "Gerenciador de contas",
+    accountManagerSub: "Crie e edite perfis em um so lugar.",
   },
   nl: {
     title: "MENU",
     subtitle: "Maken, inloggen, zoeken, bewerken, exporteren",
+    quickActions: "Snelle acties",
+    accountAccessTitle: "Accounttoegang",
+    accountAccessSub: "Ga naar accounts of log uit met een klik.",
     create: "Account maken",
     login: "Inloggen",
     search: "Gebruiker zoeken",
@@ -488,10 +526,16 @@ const I18N = {
     myAccountCreatedAt: "Mijn account is aangemaakt op",
     myLastLoginWas: "Mijn laatste login was",
     myLastEditWas: "Mijn laatste bewerking was",
+    accountManager: "Accountbeheer",
+    accountManagerTitle: "Accountbeheer",
+    accountManagerSub: "Maak en bewerk profielen op een plek.",
   },
   tr: {
     title: "MENU",
     subtitle: "Olustur, giris yap, ara, duzenle, disa aktar",
+    quickActions: "Hizli islemler",
+    accountAccessTitle: "Hesap erisimi",
+    accountAccessSub: "Hesaplara gir veya tek tikla cikis yap.",
     create: "Hesap olustur",
     login: "Giris yap",
     search: "Kullanici ara",
@@ -545,6 +589,9 @@ const I18N = {
     myAccountCreatedAt: "Hesabim su tarihte olusturuldu",
     myLastLoginWas: "Son girisim",
     myLastEditWas: "Son duzenlemem",
+    accountManager: "Hesap yoneticisi",
+    accountManagerTitle: "Hesap yoneticisi",
+    accountManagerSub: "Profilleri tek yerde olustur ve duzenle.",
   },
 };
 
@@ -800,9 +847,9 @@ function App() {
 
       <div className="card hero">
         <div>
-          <div className="eyebrow">Quick actions</div>
-          <h2>Account access</h2>
-          <div className="sub">Jump into accounts or sign out in one click.</div>
+          <div className="eyebrow">{t(lang, "quickActions")}</div>
+          <h2>{t(lang, "accountAccessTitle")}</h2>
+          <div className="sub">{t(lang, "accountAccessSub")}</div>
         </div>
         <div className="hero-actions">
           <button
@@ -811,6 +858,16 @@ function App() {
           >
             {t(lang, "enterAccounts")}
           </button>
+        </div>
+      </div>
+
+      <div className="card hero">
+        <div>
+          <div className="eyebrow">{t(lang, "quickActions")}</div>
+          <h2>{t(lang, "accountManagerTitle")}</h2>
+          <div className="sub">{t(lang, "accountManagerSub")}</div>
+        </div>
+        <div className="hero-actions">
           <button className="primary" onClick={() => setMode(currentUser ? "edit" : "create")}>
             {t(lang, "accountManager")}
           </button>
