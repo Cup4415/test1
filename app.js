@@ -154,6 +154,7 @@ const I18N = {
     accountManager: "Account manager",
     accountManagerTitle: "Account manager",
     accountManagerSub: "Create and edit profiles in one place.",
+    chat: "Chat",
   },
   fr: {
     title: "MENU",
@@ -220,6 +221,7 @@ const I18N = {
     accountManager: "Gestionnaire de comptes",
     accountManagerTitle: "Gestionnaire de comptes",
     accountManagerSub: "Creer et modifier les profils au meme endroit.",
+    chat: "Chat",
   },
   es: {
     title: "MENU",
@@ -286,6 +288,7 @@ const I18N = {
     accountManager: "Gestor de cuentas",
     accountManagerTitle: "Gestor de cuentas",
     accountManagerSub: "Crea y edita perfiles en un solo lugar.",
+    chat: "Chat",
   },
   de: {
     title: "MENU",
@@ -352,6 +355,7 @@ const I18N = {
     accountManager: "Kontoverwaltung",
     accountManagerTitle: "Kontoverwaltung",
     accountManagerSub: "Profile anlegen und bearbeiten an einem Ort.",
+    chat: "Chat",
   },
   it: {
     title: "MENU",
@@ -418,6 +422,7 @@ const I18N = {
     accountManager: "Gestore account",
     accountManagerTitle: "Gestore account",
     accountManagerSub: "Crea e modifica profili in un unico posto.",
+    chat: "Chat",
   },
   pt: {
     title: "MENU",
@@ -484,6 +489,7 @@ const I18N = {
     accountManager: "Gerenciador de contas",
     accountManagerTitle: "Gerenciador de contas",
     accountManagerSub: "Crie e edite perfis em um so lugar.",
+    chat: "Chat",
   },
   nl: {
     title: "MENU",
@@ -550,6 +556,7 @@ const I18N = {
     accountManager: "Accountbeheer",
     accountManagerTitle: "Accountbeheer",
     accountManagerSub: "Maak en bewerk profielen op een plek.",
+    chat: "Chat",
   },
   tr: {
     title: "MENU",
@@ -616,6 +623,7 @@ const I18N = {
     accountManager: "Hesap yoneticisi",
     accountManagerTitle: "Hesap yoneticisi",
     accountManagerSub: "Profilleri tek yerde olustur ve duzenle.",
+    chat: "Sohbet",
   },
 };
 
@@ -934,6 +942,19 @@ function App() {
         <div className="hero-actions">
           <button className="primary" onClick={() => setMode("accounts")}>
             {t(lang, "accountManager")}
+          </button>
+        </div>
+      </div>
+
+      <div className="card hero">
+        <div>
+          <div className="eyebrow">{t(lang, "quickActions")}</div>
+          <h2>{t(lang, "chat")}</h2>
+          <div className="sub">{t(lang, "chat")}</div>
+        </div>
+        <div className="hero-actions">
+          <button className="primary" onClick={() => setMode("home")}>
+            {t(lang, "chat")}
           </button>
         </div>
       </div>
