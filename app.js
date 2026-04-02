@@ -143,6 +143,7 @@ const I18N = {
     myAccountCreatedAt: "My account was created at",
     myLastLoginWas: "My last login was",
     myLastEditWas: "My last edit was",
+    enterAccounts: "Enter accounts",
   },
   fr: {
     title: "Comptes Profil",
@@ -594,7 +595,7 @@ function App() {
   });
   const [lang, setLang] = useState("en");
   const [currentUser, setCurrentUser] = useState(null);
-  const [mode, setMode] = useState("create");
+  const [mode, setMode] = useState("home");
   const [msg, setMsg] = useState("");
   const [searchResult, setSearchResult] = useState(null);
   const accountsRef = useRef(null);
@@ -795,153 +796,182 @@ function App() {
         </div>
       </div>
 
-      {!currentUser ? (
-        <div className="card">
-          <div className="tabs">
-            <button className={mode === "create" ? "active" : ""} onClick={() => setMode("create")}>
-              {t(lang, "create")}
-            </button>
-            <button className={mode === "login" ? "active" : ""} onClick={() => setMode("login")}>
-              {t(lang, "login")}
-            </button>
-            <button className={mode === "search" ? "active" : ""} onClick={() => setMode("search")}>
-              {t(lang, "search")}
-            </button>
-          </div>
+      <div className="card hero">
+        <div>
+          <div className="eyebrow">Quick actions</div>
+          <h2>Account access</h2>
+          <div className="sub">Jump into accounts or sign out in one click.</div>
+        </div>
+        <div className="hero-actions">
+          <button
+            className="primary"
+            onClick={() => setMode(currentUser ? "view" : "login")}
+          >
+            {t(lang, "enterAccounts")}
+          </button>
+          <button
+            className="logout"
+            disabled={!currentUser}
+            onClick={() => {
+              setCurrentUser(null);
+              setMode("home");
+              setMsg(t(lang, "logout"));
+            }}
+          >
+            {t(lang, "logout")}
+          </button>
+        </div>
+      </div>
 
-          {mode === "create" && (
-            <form onSubmit={handleCreate}>
-              <div className="row">
-                <div className="field"><label>{t(lang, "username")}</label><input value={createForm.username} onChange={(e) => setCreateForm({ ...createForm, username: e.target.value })} /></div>
-                <div className="field"><label>{t(lang, "age")}</label><input value={createForm.age} onChange={(e) => setCreateForm({ ...createForm, age: e.target.value })} /></div>
-              </div>
-              <div className="row">
+      {!currentUser ? (
+        mode === "home" ? null : (
+          <div className="card">
+            <div className="tabs">
+              <button className={mode === "create" ? "active" : ""} onClick={() => setMode("create")}>
+                {t(lang, "create")}
+              </button>
+              <button className={mode === "login" ? "active" : ""} onClick={() => setMode("login")}>
+                {t(lang, "login")}
+              </button>
+              <button className={mode === "search" ? "active" : ""} onClick={() => setMode("search")}>
+                {t(lang, "search")}
+              </button>
+            </div>
+
+            {mode === "create" && (
+              <form onSubmit={handleCreate}>
+                <div className="row">
+                  <div className="field"><label>{t(lang, "username")}</label><input value={createForm.username} onChange={(e) => setCreateForm({ ...createForm, username: e.target.value })} /></div>
+                  <div className="field"><label>{t(lang, "age")}</label><input value={createForm.age} onChange={(e) => setCreateForm({ ...createForm, age: e.target.value })} /></div>
+                </div>
+                <div className="row">
+                  <div className="field">
+                    <label>{t(lang, "password")}</label>
+                    <div className="password-input">
+                      <input
+                        type={showCreatePassword ? "text" : "password"}
+                        value={createForm.password}
+                        onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
+                      />
+                      <button
+                        type="button"
+                        className="ghost"
+                        onClick={() => setShowCreatePassword((v) => !v)}
+                      >
+                        {t(lang, showCreatePassword ? "hidePassword" : "showPassword")}
+                      </button>
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label>{t(lang, "confirmPassword")}</label>
+                    <div className="password-input">
+                      <input
+                        type={showCreateConfirm ? "text" : "password"}
+                        value={createForm.confirmPassword}
+                        onChange={(e) => setCreateForm({ ...createForm, confirmPassword: e.target.value })}
+                      />
+                      <button
+                        type="button"
+                        className="ghost"
+                        onClick={() => setShowCreateConfirm((v) => !v)}
+                      >
+                        {t(lang, showCreateConfirm ? "hidePassword" : "showPassword")}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="field"><label>{t(lang, "firstName")}</label><input value={createForm.firstName} onChange={(e) => setCreateForm({ ...createForm, firstName: e.target.value })} /></div>
+                  <div className="field"><label>{t(lang, "lastName")}</label><input value={createForm.lastName} onChange={(e) => setCreateForm({ ...createForm, lastName: e.target.value })} /></div>
+                </div>
+                <div className="row">
+                  <div className="field"><label>{t(lang, "job")}</label><input value={createForm.job} onChange={(e) => setCreateForm({ ...createForm, job: e.target.value })} /></div>
+                  <div className="field"><label>{t(lang, "favoriteFood")}</label><input value={createForm.favoriteFood} onChange={(e) => setCreateForm({ ...createForm, favoriteFood: e.target.value })} /></div>
+                </div>
+                <div className="row">
+                  <div className="field"><label>{t(lang, "city")}</label><input value={createForm.city} onChange={(e) => setCreateForm({ ...createForm, city: e.target.value })} /></div>
+                  <div className="field"><label>{t(lang, "hobby")}</label><input value={createForm.hobby} onChange={(e) => setCreateForm({ ...createForm, hobby: e.target.value })} /></div>
+                </div>
+                <div className="row">
+                  <div className="field"><label>{t(lang, "favoriteColor")}</label><input value={createForm.favoriteColor} onChange={(e) => setCreateForm({ ...createForm, favoriteColor: e.target.value })} /></div>
+                  <div className="field"><label>{t(lang, "dreamJob")}</label><input value={createForm.dreamJob} onChange={(e) => setCreateForm({ ...createForm, dreamJob: e.target.value })} /></div>
+                </div>
+                <button>{t(lang, "submitCreate")}</button>
+              </form>
+            )}
+
+            {mode === "login" && (
+              <form onSubmit={handleLogin}>
+                <div className="field"><label>{t(lang, "username")}</label><input value={loginForm.username} onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })} /></div>
                 <div className="field">
                   <label>{t(lang, "password")}</label>
                   <div className="password-input">
                     <input
-                      type={showCreatePassword ? "text" : "password"}
-                      value={createForm.password}
-                      onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })}
+                      type={showLoginPassword ? "text" : "password"}
+                      value={loginForm.password}
+                      onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
                     />
                     <button
                       type="button"
                       className="ghost"
-                      onClick={() => setShowCreatePassword((v) => !v)}
+                      onClick={() => setShowLoginPassword((v) => !v)}
                     >
-                      {t(lang, showCreatePassword ? "hidePassword" : "showPassword")}
+                      {t(lang, showLoginPassword ? "hidePassword" : "showPassword")}
                     </button>
                   </div>
                 </div>
-                <div className="field">
-                  <label>{t(lang, "confirmPassword")}</label>
-                  <div className="password-input">
-                    <input
-                      type={showCreateConfirm ? "text" : "password"}
-                      value={createForm.confirmPassword}
-                      onChange={(e) => setCreateForm({ ...createForm, confirmPassword: e.target.value })}
-                    />
-                    <button
-                      type="button"
-                      className="ghost"
-                      onClick={() => setShowCreateConfirm((v) => !v)}
-                    >
-                      {t(lang, showCreateConfirm ? "hidePassword" : "showPassword")}
-                    </button>
+                <button>{t(lang, "submitLogin")}</button>
+              </form>
+            )}
+
+            {mode === "search" && (
+              <form onSubmit={handleSearch}>
+                <div className="field"><label>{t(lang, "search")}</label><input placeholder={t(lang, "searchPlaceholder")} value={searchUsername} onChange={(e) => setSearchUsername(e.target.value)} /></div>
+                <button>{t(lang, "search")}</button>
+                {searchResult && (
+                  <div className="profile" style={{ marginTop: 10 }}>
+                    {searchResult.type === "none" && <div>{t(lang, "notFound")}</div>}
+                    {searchResult.type === "you" && (
+                      <div>
+                        <div>{t(lang, "found")}</div>
+                        <div>{t(lang, "itsYou")}</div>
+                      </div>
+                    )}
+                    {searchResult.type === "found" && (
+                      <div>
+                        {(() => {
+                          const p = normalizeProfile(searchResult.account.profile);
+                          const displayName = [p.firstName, p.lastName].filter(Boolean).join(" ") || p.username;
+                          const val = (v) => (v || v === 0 ? v : "?");
+                          const parts = [
+                            `${t(lang, "myNameIs")} ${val(displayName)}`,
+                            `${t(lang, "myUsernameIs")} ${val(p.username)}`,
+                            `${t(lang, "myAgeIs")} ${val(p.age)}`,
+                            `${t(lang, "iWorkIn")} ${val(p.job)}`,
+                            `${t(lang, "myFavoriteFoodIs")} ${val(p.favoriteFood)}`,
+                            `${t(lang, "myCityIs")} ${val(p.city)}`,
+                            `${t(lang, "myHobbyIs")} ${val(p.hobby)}`,
+                            `${t(lang, "myFavoriteColorIs")} ${val(p.favoriteColor)}`,
+                            `${t(lang, "myDreamJobIs")} ${val(p.dreamJob)}`,
+                            `${t(lang, "myAccountCreatedAt")} ${val(searchResult.account.created_at)}`,
+                            `${t(lang, "myLastLoginWas")} ${val(searchResult.account.last_login)}`,
+                            `${t(lang, "myLastEditWas")} ${val(searchResult.account.last_edit)}`,
+                          ];
+                          return (
+                            <>
+                        <div>{t(lang, "found")}</div>
+                        <div className="line">{parts.join(". ")}.</div>
+                            </>
+                          );
+                        })()}
+                      </div>
+                    )}
                   </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="field"><label>{t(lang, "firstName")}</label><input value={createForm.firstName} onChange={(e) => setCreateForm({ ...createForm, firstName: e.target.value })} /></div>
-                <div className="field"><label>{t(lang, "lastName")}</label><input value={createForm.lastName} onChange={(e) => setCreateForm({ ...createForm, lastName: e.target.value })} /></div>
-              </div>
-              <div className="row">
-                <div className="field"><label>{t(lang, "job")}</label><input value={createForm.job} onChange={(e) => setCreateForm({ ...createForm, job: e.target.value })} /></div>
-                <div className="field"><label>{t(lang, "favoriteFood")}</label><input value={createForm.favoriteFood} onChange={(e) => setCreateForm({ ...createForm, favoriteFood: e.target.value })} /></div>
-              </div>
-              <div className="row">
-                <div className="field"><label>{t(lang, "city")}</label><input value={createForm.city} onChange={(e) => setCreateForm({ ...createForm, city: e.target.value })} /></div>
-                <div className="field"><label>{t(lang, "hobby")}</label><input value={createForm.hobby} onChange={(e) => setCreateForm({ ...createForm, hobby: e.target.value })} /></div>
-              </div>
-              <div className="row">
-                <div className="field"><label>{t(lang, "favoriteColor")}</label><input value={createForm.favoriteColor} onChange={(e) => setCreateForm({ ...createForm, favoriteColor: e.target.value })} /></div>
-                <div className="field"><label>{t(lang, "dreamJob")}</label><input value={createForm.dreamJob} onChange={(e) => setCreateForm({ ...createForm, dreamJob: e.target.value })} /></div>
-              </div>
-              <button>{t(lang, "submitCreate")}</button>
-            </form>
-          )}
-
-          {mode === "login" && (
-            <form onSubmit={handleLogin}>
-              <div className="field"><label>{t(lang, "username")}</label><input value={loginForm.username} onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })} /></div>
-              <div className="field">
-                <label>{t(lang, "password")}</label>
-                <div className="password-input">
-                  <input
-                    type={showLoginPassword ? "text" : "password"}
-                    value={loginForm.password}
-                    onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-                  />
-                  <button
-                    type="button"
-                    className="ghost"
-                    onClick={() => setShowLoginPassword((v) => !v)}
-                  >
-                    {t(lang, showLoginPassword ? "hidePassword" : "showPassword")}
-                  </button>
-                </div>
-              </div>
-              <button>{t(lang, "submitLogin")}</button>
-            </form>
-          )}
-
-          {mode === "search" && (
-            <form onSubmit={handleSearch}>
-              <div className="field"><label>{t(lang, "search")}</label><input placeholder={t(lang, "searchPlaceholder")} value={searchUsername} onChange={(e) => setSearchUsername(e.target.value)} /></div>
-              <button>{t(lang, "search")}</button>
-              {searchResult && (
-                <div className="profile" style={{ marginTop: 10 }}>
-                  {searchResult.type === "none" && <div>{t(lang, "notFound")}</div>}
-                  {searchResult.type === "you" && (
-                    <div>
-                      <div>{t(lang, "found")}</div>
-                      <div>{t(lang, "itsYou")}</div>
-                    </div>
-                  )}
-                  {searchResult.type === "found" && (
-                    <div>
-                      {(() => {
-                        const p = normalizeProfile(searchResult.account.profile);
-                        const displayName = [p.firstName, p.lastName].filter(Boolean).join(" ") || p.username;
-                        const val = (v) => (v || v === 0 ? v : "?");
-                        const parts = [
-                          `${t(lang, "myNameIs")} ${val(displayName)}`,
-                          `${t(lang, "myUsernameIs")} ${val(p.username)}`,
-                          `${t(lang, "myAgeIs")} ${val(p.age)}`,
-                          `${t(lang, "iWorkIn")} ${val(p.job)}`,
-                          `${t(lang, "myFavoriteFoodIs")} ${val(p.favoriteFood)}`,
-                          `${t(lang, "myCityIs")} ${val(p.city)}`,
-                          `${t(lang, "myHobbyIs")} ${val(p.hobby)}`,
-                          `${t(lang, "myFavoriteColorIs")} ${val(p.favoriteColor)}`,
-                          `${t(lang, "myDreamJobIs")} ${val(p.dreamJob)}`,
-                          `${t(lang, "myAccountCreatedAt")} ${val(searchResult.account.created_at)}`,
-                          `${t(lang, "myLastLoginWas")} ${val(searchResult.account.last_login)}`,
-                          `${t(lang, "myLastEditWas")} ${val(searchResult.account.last_edit)}`,
-                        ];
-                        return (
-                          <>
-                      <div>{t(lang, "found")}</div>
-                      <div className="line">{parts.join(". ")}.</div>
-                          </>
-                        );
-                      })()}
-                    </div>
-                  )}
-                </div>
-              )}
-            </form>
-          )}
-        </div>
+                )}
+              </form>
+            )}
+          </div>
+        )
       ) : (
         <div className="grid">
           <div className="card">
