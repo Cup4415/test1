@@ -88,7 +88,7 @@ const LANG_LABELS = {
 
 const I18N = {
   en: {
-    title: "Profile Accounts",
+    title: "MENU",
     subtitle: "Create, login, search, edit, export",
     create: "Create account",
     login: "Login",
@@ -147,7 +147,7 @@ const I18N = {
     hideProfile: "Hide profile",
   },
   fr: {
-    title: "Comptes Profil",
+    title: "MENU",
     subtitle: "Creer, connecter, rechercher, modifier, exporter",
     create: "Creer un compte",
     login: "Se connecter",
@@ -204,7 +204,7 @@ const I18N = {
     myLastEditWas: "Ma derniere modification etait",
   },
   es: {
-    title: "Cuentas de Perfil",
+    title: "MENU",
     subtitle: "Crear, iniciar sesion, buscar, editar, exportar",
     create: "Crear cuenta",
     login: "Iniciar sesion",
@@ -261,7 +261,7 @@ const I18N = {
     myLastEditWas: "Mi ultima edicion fue",
   },
   de: {
-    title: "Profilkonten",
+    title: "MENU",
     subtitle: "Erstellen, anmelden, suchen, bearbeiten, exportieren",
     create: "Konto erstellen",
     login: "Anmelden",
@@ -318,7 +318,7 @@ const I18N = {
     myLastEditWas: "Meine letzte Bearbeitung war",
   },
   it: {
-    title: "Account Profilo",
+    title: "MENU",
     subtitle: "Crea, accedi, cerca, modifica, esporta",
     create: "Crea account",
     login: "Accedi",
@@ -375,7 +375,7 @@ const I18N = {
     myLastEditWas: "La mia ultima modifica e stata",
   },
   pt: {
-    title: "Contas de Perfil",
+    title: "MENU",
     subtitle: "Criar, entrar, pesquisar, editar, exportar",
     create: "Criar conta",
     login: "Entrar",
@@ -432,7 +432,7 @@ const I18N = {
     myLastEditWas: "Minha ultima edicao foi",
   },
   nl: {
-    title: "Profielaccounts",
+    title: "MENU",
     subtitle: "Maken, inloggen, zoeken, bewerken, exporteren",
     create: "Account maken",
     login: "Inloggen",
@@ -489,7 +489,7 @@ const I18N = {
     myLastEditWas: "Mijn laatste bewerking was",
   },
   tr: {
-    title: "Profil Hesaplari",
+    title: "MENU",
     subtitle: "Olustur, giris yap, ara, duzenle, disa aktar",
     create: "Hesap olustur",
     login: "Giris yap",
@@ -810,6 +810,7 @@ function App() {
           >
             {t(lang, "enterAccounts")}
           </button>
+          <button onClick={() => setMode("search")}>{t(lang, "search")}</button>
         </div>
       </div>
 
