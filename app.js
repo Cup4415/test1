@@ -811,7 +811,7 @@ function App() {
           >
             {t(lang, "enterAccounts")}
           </button>
-          <button onClick={() => setMode(currentUser ? "edit" : "create")}>
+          <button className="primary" onClick={() => setMode(currentUser ? "edit" : "create")}>
             {t(lang, "accountManager")}
           </button>
         </div>
