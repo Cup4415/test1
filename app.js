@@ -810,7 +810,6 @@ function App() {
           >
             {t(lang, "enterAccounts")}
           </button>
-          <button onClick={() => setMode("search")}>{t(lang, "search")}</button>
         </div>
       </div>
 
