@@ -944,6 +944,9 @@ function App() {
             <div className="eyebrow">{t(lang, "quickActions")}</div>
             <h2>{t(lang, "accountsTitle")}</h2>
             <div className="sub">{t(lang, "accountsSub")}</div>
+            <div className="actions" style={{ marginTop: 12 }}>
+              <button onClick={() => setMode("home")}>{t(lang, "hideProfile")}</button>
+            </div>
           </div>
           {renderAccountsList()}
         </>
