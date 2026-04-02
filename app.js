@@ -169,6 +169,11 @@ const I18N = {
     createdGroup: "Created group",
     groupName: "Group name",
     nameRequired: "Group name is required.",
+    enterGroup: "Enter group",
+    members: "Members",
+    send: "Send",
+    messagePlaceholder: "Type a message...",
+    noMessages: "No messages yet.",
     groups: "Groups",
     groupsTitle: "Groups",
     groupsSub: "Groups created on this device.",
@@ -254,6 +259,11 @@ const I18N = {
     createdGroup: "Groupe cree",
     groupName: "Nom du groupe",
     nameRequired: "Le nom du groupe est obligatoire.",
+    enterGroup: "Entrer dans le groupe",
+    members: "Membres",
+    send: "Envoyer",
+    messagePlaceholder: "Ecrire un message...",
+    noMessages: "Aucun message pour l'instant.",
     groups: "Groupes",
     groupsTitle: "Groupes",
     groupsSub: "Groupes crees sur cet appareil.",
@@ -339,6 +349,11 @@ const I18N = {
     createdGroup: "Grupo creado",
     groupName: "Nombre del grupo",
     nameRequired: "El nombre del grupo es obligatorio.",
+    enterGroup: "Entrar al grupo",
+    members: "Miembros",
+    send: "Enviar",
+    messagePlaceholder: "Escribe un mensaje...",
+    noMessages: "Sin mensajes aun.",
     groups: "Grupos",
     groupsTitle: "Grupos",
     groupsSub: "Grupos creados en este dispositivo.",
@@ -424,6 +439,11 @@ const I18N = {
     createdGroup: "Gruppe erstellt",
     groupName: "Gruppenname",
     nameRequired: "Gruppenname ist erforderlich.",
+    enterGroup: "Gruppe betreten",
+    members: "Mitglieder",
+    send: "Senden",
+    messagePlaceholder: "Nachricht eingeben...",
+    noMessages: "Noch keine Nachrichten.",
     groups: "Gruppen",
     groupsTitle: "Gruppen",
     groupsSub: "Gruppen auf diesem Geraet.",
@@ -509,6 +529,11 @@ const I18N = {
     createdGroup: "Gruppo creato",
     groupName: "Nome del gruppo",
     nameRequired: "Il nome del gruppo e obbligatorio.",
+    enterGroup: "Entra nel gruppo",
+    members: "Membri",
+    send: "Invia",
+    messagePlaceholder: "Scrivi un messaggio...",
+    noMessages: "Nessun messaggio per ora.",
     groups: "Gruppi",
     groupsTitle: "Gruppi",
     groupsSub: "Gruppi creati su questo dispositivo.",
@@ -594,6 +619,11 @@ const I18N = {
     createdGroup: "Grupo criado",
     groupName: "Nome do grupo",
     nameRequired: "O nome do grupo e obrigatorio.",
+    enterGroup: "Entrar no grupo",
+    members: "Membros",
+    send: "Enviar",
+    messagePlaceholder: "Digite uma mensagem...",
+    noMessages: "Nenhuma mensagem ainda.",
     groups: "Grupos",
     groupsTitle: "Grupos",
     groupsSub: "Grupos neste dispositivo.",
@@ -679,6 +709,11 @@ const I18N = {
     createdGroup: "Groep gemaakt",
     groupName: "Groepsnaam",
     nameRequired: "Groepsnaam is verplicht.",
+    enterGroup: "Groep openen",
+    members: "Leden",
+    send: "Versturen",
+    messagePlaceholder: "Typ een bericht...",
+    noMessages: "Nog geen berichten.",
     groups: "Groepen",
     groupsTitle: "Groepen",
     groupsSub: "Groepen op dit apparaat.",
@@ -764,6 +799,11 @@ const I18N = {
     createdGroup: "Grup olusturuldu",
     groupName: "Grup adi",
     nameRequired: "Grup adi gerekli.",
+    enterGroup: "Gruba gir",
+    members: "Uyeler",
+    send: "Gonder",
+    messagePlaceholder: "Mesaj yaz...",
+    noMessages: "Henuz mesaj yok.",
     groups: "Gruplar",
     groupsTitle: "Gruplar",
     groupsSub: "Bu cihazdaki gruplar.",
@@ -850,6 +890,8 @@ function App() {
   const [groupCode, setGroupCode] = useState("");
   const [joinCode, setJoinCode] = useState("");
   const [groupName, setGroupName] = useState("");
+  const [currentGroup, setCurrentGroup] = useState(null);
+  const [messageText, setMessageText] = useState("");
   const [groups, setGroups] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("chat_groups_v1")) || {};
@@ -1036,7 +1078,13 @@ function App() {
     setGroupCode(code);
     setGroups({
       ...groups,
-      [code]: { owner: currentUser, created_at: nowText(), name },
+      [code]: {
+        owner: currentUser,
+        created_at: nowText(),
+        name,
+        members: [currentUser],
+        messages: [],
+      },
     });
     setMsg(`${t(lang, "createdGroup")}: ${code}`);
   }
@@ -1061,7 +1109,54 @@ function App() {
       setMsg(t(lang, "invalidCode"));
       return;
     }
+    const group = groups[code];
+    const members = Array.isArray(group.members) ? group.members : [];
+    const nextMembers = members.includes(currentUser) ? members : [...members, currentUser];
+    setGroups({
+      ...groups,
+      [code]: { ...group, members: nextMembers },
+    });
+    setCurrentGroup(code);
+    setMode("group");
     setMsg(`${t(lang, "joinedGroup")}: ${code}`);
+  }
+
+  function handleEnterGroup(code) {
+    if (!currentUser) {
+      setMsg(t(lang, "loginRequired"));
+      return;
+    }
+    const group = groups[code];
+    if (!group) return;
+    const members = Array.isArray(group.members) ? group.members : [];
+    const nextMembers = members.includes(currentUser) ? members : [...members, currentUser];
+    setGroups({
+      ...groups,
+      [code]: { ...group, members: nextMembers },
+    });
+    setCurrentGroup(code);
+    setMode("group");
+  }
+
+  function handleSendMessage() {
+    if (!currentUser) {
+      setMsg(t(lang, "loginRequired"));
+      return;
+    }
+    if (!currentGroup || !groups[currentGroup]) return;
+    const text = messageText.trim();
+    if (!text) return;
+    const group = groups[currentGroup];
+    const messages = Array.isArray(group.messages) ? group.messages : [];
+    const next = [
+      ...messages,
+      { user: currentUser, text, at: nowText() },
+    ];
+    setGroups({
+      ...groups,
+      [currentGroup]: { ...group, messages: next },
+    });
+    setMessageText("");
   }
 
   function renderAccountsList() {
@@ -1121,6 +1216,11 @@ function App() {
             <div className="line">{t(lang, "groupName")}: {group.name || "-"}</div>
             <div className="line">{t(lang, "createdAt")}: {group.created_at || "-"}</div>
             <div className="line">{t(lang, "username")}: {group.owner || "-"}</div>
+            <div className="actions" style={{ marginTop: 8 }}>
+              <button className="primary" onClick={() => handleEnterGroup(code)}>
+                {t(lang, "enterGroup")}
+              </button>
+            </div>
           </div>
         ))}
       </div>
@@ -1255,6 +1355,53 @@ function App() {
         </>
       )}
 
+      {mode === "group" && currentGroup && groups[currentGroup] && (
+        <div className="grid">
+          <div className="card">
+            <div className="eyebrow">{t(lang, "quickActions")}</div>
+            <h2>{groups[currentGroup].name || t(lang, "groupsTitle")}</h2>
+            <div className="sub">{t(lang, "groupCode")}: {currentGroup}</div>
+            <div className="actions" style={{ marginTop: 12 }}>
+              <button onClick={() => setMode("groups")}>{t(lang, "groups")}</button>
+              <button onClick={() => setMode("home")}>{t(lang, "hideProfile")}</button>
+            </div>
+          </div>
+          <div className="card profile">
+            <div className="line"><strong>{t(lang, "members")}</strong></div>
+            <div className="line">
+              {Array.isArray(groups[currentGroup].members) && groups[currentGroup].members.length
+                ? groups[currentGroup].members.join(", ")
+                : "-"}
+            </div>
+          </div>
+          <div className="card profile">
+            <div className="line"><strong>{t(lang, "chat")}</strong></div>
+            {Array.isArray(groups[currentGroup].messages) && groups[currentGroup].messages.length ? (
+              <div>
+                {groups[currentGroup].messages.map((m, i) => (
+                  <div className="line" key={`${m.at}-${i}`}>
+                    <strong>{m.user}:</strong> {m.text} <span className="stats">({m.at})</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="sub">{t(lang, "noMessages")}</div>
+            )}
+            <div className="field" style={{ marginTop: 10 }}>
+              <label>{t(lang, "chat")}</label>
+              <input
+                placeholder={t(lang, "messagePlaceholder")}
+                value={messageText}
+                onChange={(e) => setMessageText(e.target.value)}
+              />
+            </div>
+            <div className="actions">
+              <button className="primary" onClick={handleSendMessage}>{t(lang, "send")}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showAccounts && (
         <>
           <div className="card">
@@ -1270,7 +1417,7 @@ function App() {
       )}
 
       {!currentUser ? (
-        showAccounts || showGroups || mode === "home" || mode === "chat" ? null : (
+        showAccounts || showGroups || mode === "home" || mode === "chat" || mode === "group" ? null : (
           <div className="card">
             <div className="tabs">
               <button className={mode === "create" ? "active" : ""} onClick={() => setMode("create")}>
@@ -1419,7 +1566,7 @@ function App() {
           </div>
         )
       ) : (
-        showAccounts || showGroups || mode === "home" || mode === "chat" ? null : (
+        showAccounts || showGroups || mode === "home" || mode === "chat" || mode === "group" ? null : (
           <div className="grid">
             <div className="card">
               <div className="actions">
