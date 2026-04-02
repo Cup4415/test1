@@ -144,6 +144,7 @@ const I18N = {
     myLastLoginWas: "My last login was",
     myLastEditWas: "My last edit was",
     enterAccounts: "Enter accounts",
+    hideProfile: "Hide profile",
   },
   fr: {
     title: "Comptes Profil",
@@ -809,17 +810,6 @@ function App() {
           >
             {t(lang, "enterAccounts")}
           </button>
-          <button
-            className="logout"
-            disabled={!currentUser}
-            onClick={() => {
-              setCurrentUser(null);
-              setMode("home");
-              setMsg(t(lang, "logout"));
-            }}
-          >
-            {t(lang, "logout")}
-          </button>
         </div>
       </div>
 
@@ -973,114 +963,117 @@ function App() {
           </div>
         )
       ) : (
-        <div className="grid">
-          <div className="card">
-            <div className="actions">
-              <button className={mode === "view" ? "active" : ""} onClick={() => setMode("view")}>{t(lang, "viewProfile")}</button>
-              <button className={mode === "edit" ? "active" : ""} onClick={() => setMode("edit")}>{t(lang, "editProfile")}</button>
-              <button className={mode === "search" ? "active" : ""} onClick={() => setMode("search")}>{t(lang, "search")}</button>
-              <button className="danger" onClick={handleDelete}>{t(lang, "deleteAccount")}</button>
-              <button className="logout" onClick={() => { setCurrentUser(null); setMode("login"); setMsg(t(lang, "logout")); }}>
-                {t(lang, "logout")}
-              </button>
-            </div>
-          </div>
-
-          {mode === "view" && currentAccount && (
-            <div className="card profile">
-              <div className="line"><strong>{currentAccount.profile.firstName} {currentAccount.profile.lastName}</strong></div>
-              <div className="line">{t(lang, "username")}: {currentAccount.profile.username}</div>
-              <div className="line">{t(lang, "age")}: {currentAccount.profile.age}</div>
-              <div className="line">{t(lang, "job")}: {currentAccount.profile.job}</div>
-              <div className="line">{t(lang, "favoriteFood")}: {currentAccount.profile.favoriteFood}</div>
-              <div className="line">{t(lang, "city")}: {currentAccount.profile.city}</div>
-              <div className="line">{t(lang, "hobby")}: {currentAccount.profile.hobby}</div>
-              <div className="line">{t(lang, "favoriteColor")}: {currentAccount.profile.favoriteColor}</div>
-              <div className="line">{t(lang, "dreamJob")}: {currentAccount.profile.dreamJob}</div>
-              <div className="stats">
-                <div>{t(lang, "stats")}:</div>
-                <div>{t(lang, "createdAt")}: {currentAccount.created_at}</div>
-                <div>{t(lang, "lastLogin")}: {currentAccount.last_login}</div>
-                <div>{t(lang, "lastEdit")}: {currentAccount.last_edit}</div>
-              </div>
-            </div>
-          )}
-
-          {mode === "edit" && editForm && (
-            <form className="card" onSubmit={handleSaveEdit}>
-              <div className="row">
-                <div className="field"><label>{t(lang, "username")}</label><input value={editForm.username || ""} onChange={(e) => setEditForm({ ...editForm, username: e.target.value })} /></div>
-                <div className="field"><label>{t(lang, "age")}</label><input value={editForm.age || ""} onChange={(e) => setEditForm({ ...editForm, age: e.target.value })} /></div>
-              </div>
-              <div className="row">
-                <div className="field"><label>{t(lang, "firstName")}</label><input value={editForm.firstName || ""} onChange={(e) => setEditForm({ ...editForm, firstName: e.target.value })} /></div>
-                <div className="field"><label>{t(lang, "lastName")}</label><input value={editForm.lastName || ""} onChange={(e) => setEditForm({ ...editForm, lastName: e.target.value })} /></div>
-              </div>
-              <div className="row">
-                <div className="field"><label>{t(lang, "job")}</label><input value={editForm.job || ""} onChange={(e) => setEditForm({ ...editForm, job: e.target.value })} /></div>
-                <div className="field"><label>{t(lang, "favoriteFood")}</label><input value={editForm.favoriteFood || ""} onChange={(e) => setEditForm({ ...editForm, favoriteFood: e.target.value })} /></div>
-              </div>
-              <div className="row">
-                <div className="field"><label>{t(lang, "city")}</label><input value={editForm.city || ""} onChange={(e) => setEditForm({ ...editForm, city: e.target.value })} /></div>
-                <div className="field"><label>{t(lang, "hobby")}</label><input value={editForm.hobby || ""} onChange={(e) => setEditForm({ ...editForm, hobby: e.target.value })} /></div>
-              </div>
-              <div className="row">
-                <div className="field"><label>{t(lang, "favoriteColor")}</label><input value={editForm.favoriteColor || ""} onChange={(e) => setEditForm({ ...editForm, favoriteColor: e.target.value })} /></div>
-                <div className="field"><label>{t(lang, "dreamJob")}</label><input value={editForm.dreamJob || ""} onChange={(e) => setEditForm({ ...editForm, dreamJob: e.target.value })} /></div>
-              </div>
-              <button>{t(lang, "saveChanges")}</button>
-            </form>
-          )}
-
-          {mode === "search" && (
+        mode === "home" ? null : (
+          <div className="grid">
             <div className="card">
-              <form onSubmit={handleSearch}>
-                <div className="field"><label>{t(lang, "search")}</label><input placeholder={t(lang, "searchPlaceholder")} value={searchUsername} onChange={(e) => setSearchUsername(e.target.value)} /></div>
-                <button>{t(lang, "search")}</button>
-              </form>
-              {searchResult && (
-                <div className="profile" style={{ marginTop: 10 }}>
-                  {searchResult.type === "none" && <div>{t(lang, "notFound")}</div>}
-                  {searchResult.type === "you" && (
-                    <div>
-                      <div>{t(lang, "found")}</div>
-                      <div>{t(lang, "itsYou")}</div>
-                    </div>
-                  )}
-                  {searchResult.type === "found" && (
-                    <div>
-                      {(() => {
-                        const p = normalizeProfile(searchResult.account.profile);
-                        const displayName = [p.firstName, p.lastName].filter(Boolean).join(" ") || p.username;
-                        const val = (v) => (v || v === 0 ? v : "?");
-                        const parts = [
-                          `${t(lang, "myNameIs")} ${val(displayName)}`,
-                          `${t(lang, "myUsernameIs")} ${val(p.username)}`,
-                          `${t(lang, "myAgeIs")} ${val(p.age)}`,
-                          `${t(lang, "iWorkIn")} ${val(p.job)}`,
-                          `${t(lang, "myFavoriteFoodIs")} ${val(p.favoriteFood)}`,
-                          `${t(lang, "myCityIs")} ${val(p.city)}`,
-                          `${t(lang, "myHobbyIs")} ${val(p.hobby)}`,
-                          `${t(lang, "myFavoriteColorIs")} ${val(p.favoriteColor)}`,
-                          `${t(lang, "myDreamJobIs")} ${val(p.dreamJob)}`,
-                          `${t(lang, "myAccountCreatedAt")} ${val(searchResult.account.created_at)}`,
-                          `${t(lang, "myLastLoginWas")} ${val(searchResult.account.last_login)}`,
-                          `${t(lang, "myLastEditWas")} ${val(searchResult.account.last_edit)}`,
-                        ];
-                        return (
-                          <>
-                            <div>{t(lang, "found")}</div>
-                            <div className="line">{parts.join(". ")}.</div>
-                          </>
-                        );
-                      })()}
-                    </div>
-                  )}
-                </div>
-              )}
+              <div className="actions">
+                <button className={mode === "view" ? "active" : ""} onClick={() => setMode("view")}>{t(lang, "viewProfile")}</button>
+                <button className={mode === "edit" ? "active" : ""} onClick={() => setMode("edit")}>{t(lang, "editProfile")}</button>
+                <button className={mode === "search" ? "active" : ""} onClick={() => setMode("search")}>{t(lang, "search")}</button>
+                <button onClick={() => setMode("home")}>{t(lang, "hideProfile")}</button>
+                <button className="danger" onClick={handleDelete}>{t(lang, "deleteAccount")}</button>
+                <button className="logout" onClick={() => { setCurrentUser(null); setMode("login"); setMsg(t(lang, "logout")); }}>
+                  {t(lang, "logout")}
+                </button>
+              </div>
             </div>
-          )}
-        </div>
+
+            {mode === "view" && currentAccount && (
+              <div className="card profile">
+                <div className="line"><strong>{currentAccount.profile.firstName} {currentAccount.profile.lastName}</strong></div>
+                <div className="line">{t(lang, "username")}: {currentAccount.profile.username}</div>
+                <div className="line">{t(lang, "age")}: {currentAccount.profile.age}</div>
+                <div className="line">{t(lang, "job")}: {currentAccount.profile.job}</div>
+                <div className="line">{t(lang, "favoriteFood")}: {currentAccount.profile.favoriteFood}</div>
+                <div className="line">{t(lang, "city")}: {currentAccount.profile.city}</div>
+                <div className="line">{t(lang, "hobby")}: {currentAccount.profile.hobby}</div>
+                <div className="line">{t(lang, "favoriteColor")}: {currentAccount.profile.favoriteColor}</div>
+                <div className="line">{t(lang, "dreamJob")}: {currentAccount.profile.dreamJob}</div>
+                <div className="stats">
+                  <div>{t(lang, "stats")}:</div>
+                  <div>{t(lang, "createdAt")}: {currentAccount.created_at}</div>
+                  <div>{t(lang, "lastLogin")}: {currentAccount.last_login}</div>
+                  <div>{t(lang, "lastEdit")}: {currentAccount.last_edit}</div>
+                </div>
+              </div>
+            )}
+
+            {mode === "edit" && editForm && (
+              <form className="card" onSubmit={handleSaveEdit}>
+                <div className="row">
+                  <div className="field"><label>{t(lang, "username")}</label><input value={editForm.username || ""} onChange={(e) => setEditForm({ ...editForm, username: e.target.value })} /></div>
+                  <div className="field"><label>{t(lang, "age")}</label><input value={editForm.age || ""} onChange={(e) => setEditForm({ ...editForm, age: e.target.value })} /></div>
+                </div>
+                <div className="row">
+                  <div className="field"><label>{t(lang, "firstName")}</label><input value={editForm.firstName || ""} onChange={(e) => setEditForm({ ...editForm, firstName: e.target.value })} /></div>
+                  <div className="field"><label>{t(lang, "lastName")}</label><input value={editForm.lastName || ""} onChange={(e) => setEditForm({ ...editForm, lastName: e.target.value })} /></div>
+                </div>
+                <div className="row">
+                  <div className="field"><label>{t(lang, "job")}</label><input value={editForm.job || ""} onChange={(e) => setEditForm({ ...editForm, job: e.target.value })} /></div>
+                  <div className="field"><label>{t(lang, "favoriteFood")}</label><input value={editForm.favoriteFood || ""} onChange={(e) => setEditForm({ ...editForm, favoriteFood: e.target.value })} /></div>
+                </div>
+                <div className="row">
+                  <div className="field"><label>{t(lang, "city")}</label><input value={editForm.city || ""} onChange={(e) => setEditForm({ ...editForm, city: e.target.value })} /></div>
+                  <div className="field"><label>{t(lang, "hobby")}</label><input value={editForm.hobby || ""} onChange={(e) => setEditForm({ ...editForm, hobby: e.target.value })} /></div>
+                </div>
+                <div className="row">
+                  <div className="field"><label>{t(lang, "favoriteColor")}</label><input value={editForm.favoriteColor || ""} onChange={(e) => setEditForm({ ...editForm, favoriteColor: e.target.value })} /></div>
+                  <div className="field"><label>{t(lang, "dreamJob")}</label><input value={editForm.dreamJob || ""} onChange={(e) => setEditForm({ ...editForm, dreamJob: e.target.value })} /></div>
+                </div>
+                <button>{t(lang, "saveChanges")}</button>
+              </form>
+            )}
+
+            {mode === "search" && (
+              <div className="card">
+                <form onSubmit={handleSearch}>
+                  <div className="field"><label>{t(lang, "search")}</label><input placeholder={t(lang, "searchPlaceholder")} value={searchUsername} onChange={(e) => setSearchUsername(e.target.value)} /></div>
+                  <button>{t(lang, "search")}</button>
+                </form>
+                {searchResult && (
+                  <div className="profile" style={{ marginTop: 10 }}>
+                    {searchResult.type === "none" && <div>{t(lang, "notFound")}</div>}
+                    {searchResult.type === "you" && (
+                      <div>
+                        <div>{t(lang, "found")}</div>
+                        <div>{t(lang, "itsYou")}</div>
+                      </div>
+                    )}
+                    {searchResult.type === "found" && (
+                      <div>
+                        {(() => {
+                          const p = normalizeProfile(searchResult.account.profile);
+                          const displayName = [p.firstName, p.lastName].filter(Boolean).join(" ") || p.username;
+                          const val = (v) => (v || v === 0 ? v : "?");
+                          const parts = [
+                            `${t(lang, "myNameIs")} ${val(displayName)}`,
+                            `${t(lang, "myUsernameIs")} ${val(p.username)}`,
+                            `${t(lang, "myAgeIs")} ${val(p.age)}`,
+                            `${t(lang, "iWorkIn")} ${val(p.job)}`,
+                            `${t(lang, "myFavoriteFoodIs")} ${val(p.favoriteFood)}`,
+                            `${t(lang, "myCityIs")} ${val(p.city)}`,
+                            `${t(lang, "myHobbyIs")} ${val(p.hobby)}`,
+                            `${t(lang, "myFavoriteColorIs")} ${val(p.favoriteColor)}`,
+                            `${t(lang, "myDreamJobIs")} ${val(p.dreamJob)}`,
+                            `${t(lang, "myAccountCreatedAt")} ${val(searchResult.account.created_at)}`,
+                            `${t(lang, "myLastLoginWas")} ${val(searchResult.account.last_login)}`,
+                            `${t(lang, "myLastEditWas")} ${val(searchResult.account.last_edit)}`,
+                          ];
+                          return (
+                            <>
+                              <div>{t(lang, "found")}</div>
+                              <div className="line">{parts.join(". ")}.</div>
+                            </>
+                          );
+                        })()}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )
       )}
 
       {msg && <div className="msg">{msg}</div>}
