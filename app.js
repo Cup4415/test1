@@ -167,6 +167,8 @@ const I18N = {
     invalidCode: "Invalid group code.",
     joinedGroup: "Joined group",
     createdGroup: "Created group",
+    groupName: "Group name",
+    nameRequired: "Group name is required.",
     groups: "Groups",
     groupsTitle: "Groups",
     groupsSub: "Groups created on this device.",
@@ -250,6 +252,8 @@ const I18N = {
     invalidCode: "Code de groupe invalide.",
     joinedGroup: "Groupe rejoint",
     createdGroup: "Groupe cree",
+    groupName: "Nom du groupe",
+    nameRequired: "Le nom du groupe est obligatoire.",
     groups: "Groupes",
     groupsTitle: "Groupes",
     groupsSub: "Groupes crees sur cet appareil.",
@@ -333,6 +337,8 @@ const I18N = {
     invalidCode: "Codigo de grupo invalido.",
     joinedGroup: "Grupo unido",
     createdGroup: "Grupo creado",
+    groupName: "Nombre del grupo",
+    nameRequired: "El nombre del grupo es obligatorio.",
     groups: "Grupos",
     groupsTitle: "Grupos",
     groupsSub: "Grupos creados en este dispositivo.",
@@ -416,6 +422,8 @@ const I18N = {
     invalidCode: "Ungueltiger Gruppencode.",
     joinedGroup: "Gruppe beigetreten",
     createdGroup: "Gruppe erstellt",
+    groupName: "Gruppenname",
+    nameRequired: "Gruppenname ist erforderlich.",
     groups: "Gruppen",
     groupsTitle: "Gruppen",
     groupsSub: "Gruppen auf diesem Geraet.",
@@ -499,6 +507,8 @@ const I18N = {
     invalidCode: "Codice gruppo non valido.",
     joinedGroup: "Gruppo unito",
     createdGroup: "Gruppo creato",
+    groupName: "Nome del gruppo",
+    nameRequired: "Il nome del gruppo e obbligatorio.",
     groups: "Gruppi",
     groupsTitle: "Gruppi",
     groupsSub: "Gruppi creati su questo dispositivo.",
@@ -582,6 +592,8 @@ const I18N = {
     invalidCode: "Codigo de grupo invalido.",
     joinedGroup: "Grupo conectado",
     createdGroup: "Grupo criado",
+    groupName: "Nome do grupo",
+    nameRequired: "O nome do grupo e obrigatorio.",
     groups: "Grupos",
     groupsTitle: "Grupos",
     groupsSub: "Grupos neste dispositivo.",
@@ -665,6 +677,8 @@ const I18N = {
     invalidCode: "Ongeldige groepscode.",
     joinedGroup: "Groep joined",
     createdGroup: "Groep gemaakt",
+    groupName: "Groepsnaam",
+    nameRequired: "Groepsnaam is verplicht.",
     groups: "Groepen",
     groupsTitle: "Groepen",
     groupsSub: "Groepen op dit apparaat.",
@@ -748,6 +762,8 @@ const I18N = {
     invalidCode: "Gecersiz grup kodu.",
     joinedGroup: "Gruba katildi",
     createdGroup: "Grup olusturuldu",
+    groupName: "Grup adi",
+    nameRequired: "Grup adi gerekli.",
     groups: "Gruplar",
     groupsTitle: "Gruplar",
     groupsSub: "Bu cihazdaki gruplar.",
@@ -833,6 +849,7 @@ function App() {
   const showGroups = mode === "groups";
   const [groupCode, setGroupCode] = useState("");
   const [joinCode, setJoinCode] = useState("");
+  const [groupName, setGroupName] = useState("");
   const [groups, setGroups] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("chat_groups_v1")) || {};
@@ -1010,13 +1027,18 @@ function App() {
       setMsg(t(lang, "loginRequired"));
       return;
     }
+    const name = groupName.trim();
+    if (!name) {
+      setMsg(t(lang, "nameRequired"));
+      return;
+    }
     const code = makeGroupCode();
     setGroupCode(code);
     setGroups({
       ...groups,
-      [code]: { owner: currentUser, created_at: nowText() },
+      [code]: { owner: currentUser, created_at: nowText(), name },
     });
-    setMsg("");
+    setMsg(`${t(lang, "createdGroup")}: ${code}`);
   }
 
   async function handleCopyCode() {
@@ -1096,6 +1118,7 @@ function App() {
         {entries.map(([code, group]) => (
           <div className="card profile" key={code}>
             <div className="line"><strong>{t(lang, "groupCode")}: {code}</strong></div>
+            <div className="line">{t(lang, "groupName")}: {group.name || "-"}</div>
             <div className="line">{t(lang, "createdAt")}: {group.created_at || "-"}</div>
             <div className="line">{t(lang, "username")}: {group.owner || "-"}</div>
           </div>
@@ -1178,6 +1201,10 @@ function App() {
           <div className="row" style={{ marginTop: 12 }}>
             <div className="card profile">
               <div className="line"><strong>{t(lang, "createGroup")}</strong></div>
+              <div className="field" style={{ marginTop: 8 }}>
+                <label>{t(lang, "groupName")}</label>
+                <input value={groupName} onChange={(e) => setGroupName(e.target.value)} />
+              </div>
               <div className="line">{t(lang, "groupCode")}: {groupCode || "-"}</div>
               <div className="actions" style={{ marginTop: 8 }}>
                 <button className="primary" onClick={handleCreateGroup}>{t(lang, "createGroup")}</button>
