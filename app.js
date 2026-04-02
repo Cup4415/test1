@@ -131,6 +131,18 @@ const I18N = {
     chooseLang: "Choose language",
     showPassword: "Show",
     hidePassword: "Hide",
+    myNameIs: "My name is",
+    myUsernameIs: "My username is",
+    myAgeIs: "My age is",
+    iWorkIn: "I work in",
+    myFavoriteFoodIs: "My favorite food is",
+    myCityIs: "My city is",
+    myHobbyIs: "My hobby is",
+    myFavoriteColorIs: "My favorite color is",
+    myDreamJobIs: "My dream job is",
+    myAccountCreatedAt: "My account was created at",
+    myLastLoginWas: "My last login was",
+    myLastEditWas: "My last edit was",
   },
   fr: {
     title: "Comptes Profil",
@@ -176,6 +188,18 @@ const I18N = {
     chooseLang: "Choisir la langue",
     showPassword: "Afficher",
     hidePassword: "Masquer",
+    myNameIs: "Mon nom est",
+    myUsernameIs: "Mon nom d'utilisateur est",
+    myAgeIs: "Mon age est",
+    iWorkIn: "Je travaille en",
+    myFavoriteFoodIs: "Mon plat prefere est",
+    myCityIs: "Ma ville est",
+    myHobbyIs: "Mon loisir est",
+    myFavoriteColorIs: "Ma couleur preferee est",
+    myDreamJobIs: "Mon metier de reve est",
+    myAccountCreatedAt: "Mon compte a ete cree le",
+    myLastLoginWas: "Ma derniere connexion etait",
+    myLastEditWas: "Ma derniere modification etait",
   },
   es: {
     title: "Cuentas de Perfil",
@@ -221,6 +245,18 @@ const I18N = {
     chooseLang: "Elegir idioma",
     showPassword: "Mostrar",
     hidePassword: "Ocultar",
+    myNameIs: "Mi nombre es",
+    myUsernameIs: "Mi usuario es",
+    myAgeIs: "Mi edad es",
+    iWorkIn: "Trabajo en",
+    myFavoriteFoodIs: "Mi comida favorita es",
+    myCityIs: "Mi ciudad es",
+    myHobbyIs: "Mi pasatiempo es",
+    myFavoriteColorIs: "Mi color favorito es",
+    myDreamJobIs: "Mi trabajo sonado es",
+    myAccountCreatedAt: "Mi cuenta fue creada el",
+    myLastLoginWas: "Mi ultimo acceso fue",
+    myLastEditWas: "Mi ultima edicion fue",
   },
   de: {
     title: "Profilkonten",
@@ -266,6 +302,18 @@ const I18N = {
     chooseLang: "Sprache waehlen",
     showPassword: "Anzeigen",
     hidePassword: "Verbergen",
+    myNameIs: "Mein Name ist",
+    myUsernameIs: "Mein Benutzername ist",
+    myAgeIs: "Mein Alter ist",
+    iWorkIn: "Ich arbeite in",
+    myFavoriteFoodIs: "Mein Lieblingsessen ist",
+    myCityIs: "Meine Stadt ist",
+    myHobbyIs: "Mein Hobby ist",
+    myFavoriteColorIs: "Meine Lieblingsfarbe ist",
+    myDreamJobIs: "Mein Traumberuf ist",
+    myAccountCreatedAt: "Mein Konto wurde erstellt am",
+    myLastLoginWas: "Mein letzter Login war",
+    myLastEditWas: "Meine letzte Bearbeitung war",
   },
   it: {
     title: "Account Profilo",
@@ -311,6 +359,18 @@ const I18N = {
     chooseLang: "Scegli lingua",
     showPassword: "Mostra",
     hidePassword: "Nascondi",
+    myNameIs: "Il mio nome e",
+    myUsernameIs: "Il mio nome utente e",
+    myAgeIs: "La mia eta e",
+    iWorkIn: "Lavoro in",
+    myFavoriteFoodIs: "Il mio cibo preferito e",
+    myCityIs: "La mia citta e",
+    myHobbyIs: "Il mio hobby e",
+    myFavoriteColorIs: "Il mio colore preferito e",
+    myDreamJobIs: "Il mio lavoro dei sogni e",
+    myAccountCreatedAt: "Il mio account e stato creato il",
+    myLastLoginWas: "Il mio ultimo accesso e stato",
+    myLastEditWas: "La mia ultima modifica e stata",
   },
   pt: {
     title: "Contas de Perfil",
@@ -356,6 +416,18 @@ const I18N = {
     chooseLang: "Escolher idioma",
     showPassword: "Mostrar",
     hidePassword: "Ocultar",
+    myNameIs: "Meu nome e",
+    myUsernameIs: "Meu nome de usuario e",
+    myAgeIs: "Minha idade e",
+    iWorkIn: "Eu trabalho em",
+    myFavoriteFoodIs: "Minha comida favorita e",
+    myCityIs: "Minha cidade e",
+    myHobbyIs: "Meu hobby e",
+    myFavoriteColorIs: "Minha cor favorita e",
+    myDreamJobIs: "Minha profissao dos sonhos e",
+    myAccountCreatedAt: "Minha conta foi criada em",
+    myLastLoginWas: "Meu ultimo login foi",
+    myLastEditWas: "Minha ultima edicao foi",
   },
   nl: {
     title: "Profielaccounts",
@@ -401,6 +473,18 @@ const I18N = {
     chooseLang: "Kies taal",
     showPassword: "Tonen",
     hidePassword: "Verbergen",
+    myNameIs: "Mijn naam is",
+    myUsernameIs: "Mijn gebruikersnaam is",
+    myAgeIs: "Mijn leeftijd is",
+    iWorkIn: "Ik werk in",
+    myFavoriteFoodIs: "Mijn favoriete eten is",
+    myCityIs: "Mijn stad is",
+    myHobbyIs: "Mijn hobby is",
+    myFavoriteColorIs: "Mijn favoriete kleur is",
+    myDreamJobIs: "Mijn droombaan is",
+    myAccountCreatedAt: "Mijn account is aangemaakt op",
+    myLastLoginWas: "Mijn laatste login was",
+    myLastEditWas: "Mijn laatste bewerking was",
   },
   tr: {
     title: "Profil Hesaplari",
@@ -446,6 +530,18 @@ const I18N = {
     chooseLang: "Dil sec",
     showPassword: "Goster",
     hidePassword: "Gizle",
+    myNameIs: "Benim adim",
+    myUsernameIs: "Kullanici adim",
+    myAgeIs: "Yasim",
+    iWorkIn: "Su alanda calisiyorum",
+    myFavoriteFoodIs: "Favori yemegim",
+    myCityIs: "Sehrim",
+    myHobbyIs: "Hobim",
+    myFavoriteColorIs: "Favori rengim",
+    myDreamJobIs: "Hayal meslegim",
+    myAccountCreatedAt: "Hesabim su tarihte olusturuldu",
+    myLastLoginWas: "Son girisim",
+    myLastEditWas: "Son duzenlemem",
   },
 };
 
@@ -816,21 +912,26 @@ function App() {
                     <div>
                       {(() => {
                         const p = normalizeProfile(searchResult.account.profile);
+                        const displayName = [p.firstName, p.lastName].filter(Boolean).join(" ") || p.username;
+                        const val = (v) => (v || v === 0 ? v : "?");
+                        const parts = [
+                          `${t(lang, "myNameIs")} ${val(displayName)}`,
+                          `${t(lang, "myUsernameIs")} ${val(p.username)}`,
+                          `${t(lang, "myAgeIs")} ${val(p.age)}`,
+                          `${t(lang, "iWorkIn")} ${val(p.job)}`,
+                          `${t(lang, "myFavoriteFoodIs")} ${val(p.favoriteFood)}`,
+                          `${t(lang, "myCityIs")} ${val(p.city)}`,
+                          `${t(lang, "myHobbyIs")} ${val(p.hobby)}`,
+                          `${t(lang, "myFavoriteColorIs")} ${val(p.favoriteColor)}`,
+                          `${t(lang, "myDreamJobIs")} ${val(p.dreamJob)}`,
+                          `${t(lang, "myAccountCreatedAt")} ${val(searchResult.account.created_at)}`,
+                          `${t(lang, "myLastLoginWas")} ${val(searchResult.account.last_login)}`,
+                          `${t(lang, "myLastEditWas")} ${val(searchResult.account.last_edit)}`,
+                        ];
                         return (
                           <>
                       <div>{t(lang, "found")}</div>
-                      <div className="line">{p.firstName} {p.lastName}</div>
-                      <div className="line">{t(lang, "username")}: {p.username}</div>
-                      <div className="line">{t(lang, "job")}: {p.job}</div>
-                      <div className="line">{t(lang, "age")}: {p.age}</div>
-                      <div className="line">{t(lang, "favoriteFood")}: {p.favoriteFood}</div>
-                      <div className="line">{t(lang, "city")}: {p.city}</div>
-                      <div className="line">{t(lang, "hobby")}: {p.hobby}</div>
-                      <div className="line">{t(lang, "favoriteColor")}: {p.favoriteColor}</div>
-                      <div className="line">{t(lang, "dreamJob")}: {p.dreamJob}</div>
-                      <div className="line">{t(lang, "createdAt")}: {searchResult.account.created_at}</div>
-                      <div className="line">{t(lang, "lastLogin")}: {searchResult.account.last_login}</div>
-                      <div className="line">{t(lang, "lastEdit")}: {searchResult.account.last_edit}</div>
+                      <div className="line">{parts.join(". ")}.</div>
                           </>
                         );
                       })()}
@@ -920,21 +1021,26 @@ function App() {
                     <div>
                       {(() => {
                         const p = normalizeProfile(searchResult.account.profile);
+                        const displayName = [p.firstName, p.lastName].filter(Boolean).join(" ") || p.username;
+                        const val = (v) => (v || v === 0 ? v : "?");
+                        const parts = [
+                          `${t(lang, "myNameIs")} ${val(displayName)}`,
+                          `${t(lang, "myUsernameIs")} ${val(p.username)}`,
+                          `${t(lang, "myAgeIs")} ${val(p.age)}`,
+                          `${t(lang, "iWorkIn")} ${val(p.job)}`,
+                          `${t(lang, "myFavoriteFoodIs")} ${val(p.favoriteFood)}`,
+                          `${t(lang, "myCityIs")} ${val(p.city)}`,
+                          `${t(lang, "myHobbyIs")} ${val(p.hobby)}`,
+                          `${t(lang, "myFavoriteColorIs")} ${val(p.favoriteColor)}`,
+                          `${t(lang, "myDreamJobIs")} ${val(p.dreamJob)}`,
+                          `${t(lang, "myAccountCreatedAt")} ${val(searchResult.account.created_at)}`,
+                          `${t(lang, "myLastLoginWas")} ${val(searchResult.account.last_login)}`,
+                          `${t(lang, "myLastEditWas")} ${val(searchResult.account.last_edit)}`,
+                        ];
                         return (
                           <>
                             <div>{t(lang, "found")}</div>
-                            <div className="line">{p.firstName} {p.lastName}</div>
-                            <div className="line">{t(lang, "username")}: {p.username}</div>
-                            <div className="line">{t(lang, "job")}: {p.job}</div>
-                            <div className="line">{t(lang, "age")}: {p.age}</div>
-                            <div className="line">{t(lang, "favoriteFood")}: {p.favoriteFood}</div>
-                            <div className="line">{t(lang, "city")}: {p.city}</div>
-                            <div className="line">{t(lang, "hobby")}: {p.hobby}</div>
-                            <div className="line">{t(lang, "favoriteColor")}: {p.favoriteColor}</div>
-                            <div className="line">{t(lang, "dreamJob")}: {p.dreamJob}</div>
-                            <div className="line">{t(lang, "createdAt")}: {searchResult.account.created_at}</div>
-                            <div className="line">{t(lang, "lastLogin")}: {searchResult.account.last_login}</div>
-                            <div className="line">{t(lang, "lastEdit")}: {searchResult.account.last_edit}</div>
+                            <div className="line">{parts.join(". ")}.</div>
                           </>
                         );
                       })()}
