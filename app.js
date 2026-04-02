@@ -1019,7 +1019,7 @@ function App() {
       )}
 
       {!currentUser ? (
-        showAccounts || mode === "home" ? null : (
+        showAccounts || mode === "home" || mode === "chat" ? null : (
           <div className="card">
             <div className="tabs">
               <button className={mode === "create" ? "active" : ""} onClick={() => setMode("create")}>
@@ -1168,7 +1168,7 @@ function App() {
           </div>
         )
       ) : (
-        showAccounts || mode === "home" ? null : (
+        showAccounts || mode === "home" || mode === "chat" ? null : (
           <div className="grid">
             <div className="card">
               <div className="actions">
